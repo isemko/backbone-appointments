@@ -1,11 +1,13 @@
 // Module dependencies.
-var application_root = __dirname, express = require('express'), //Web framework
-path = require('path'), //Utilities for dealing with file paths
-mongoose = require('mongoose');
+
 var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
   'mongodb://localhost/appointments';
 
+var application_root = __dirname, express = require('express'), //Web framework
+path = require('path'), //Utilities for dealing with file paths
+
+mongoose = require('mongoose');
 //MongoDB integration
 
 //Create server
