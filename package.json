@@ -1,0 +1,10 @@
+{
+    "name": "backbone-library",
+    "version": "0.0.1",
+    "description": "appointment app",
+    "dependencies": {
+        "express": "*",
+        "path": "*",
+        "mongoose": "*"
+    }
+}
