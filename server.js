@@ -2,6 +2,10 @@
 var application_root = __dirname, express = require('express'), //Web framework
 path = require('path'), //Utilities for dealing with file paths
 mongoose = require('mongoose');
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/appointments';
+
 //MongoDB integration
 
 //Create server
@@ -27,7 +31,7 @@ app.configure(function() {
 		showStack : true
 	}));
 });
-mongoose.connect('mongodb://localhost/appointments');
+mongoose.connect(mongoUri);
 
 //Schemas
 
