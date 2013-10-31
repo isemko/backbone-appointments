@@ -117,6 +117,6 @@ app.delete( '/api/appointments/:id', function( request, response ) {
 var AppointmentModel = mongoose.model('Appointment', Appointment);
 //Start server
 var port = 5000;
-app.listen(port, function() {
+app.listen(process.env.PORT || 5000, function() {
 	console.log('Express server listening on port %d in %s mode', port, app.settings.env);
 });
