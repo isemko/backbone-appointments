@@ -18,26 +18,34 @@ var app = app || {};
 app.MyRouter = Backbone.Router.extend({
 	routes : {
 		"" : "index",
-		"appointments/:id" : "showAppointment"
+		"appointments/:id" : "showAppointment",
+		"edit":"editMain"
 	},
-
 	initialize : function(options) {
 	
-	Backbone.history.start({pushState: true});
+	
 	// this.collection.on('reset', this.render, this);
 	},
 
 	index : function() {
+		var navView =  new app.MainNav();
 		var homeView = new app.AppointmentListView();
 		homeView.viewFetch();
 	},
 
 	showAppointment : function(id) {
-	console.log('test', id);
+		//change nav, update view to show edit
+	var navView = new app.EditNav();
+	$('.del').show();
+		
+	},
+	editMain: function(){
+		
+		
 	}
 });
 $(function() {
 	
 	appMain = new app.MyRouter();
-	
+	Backbone.history.start({pushState: true});
 });

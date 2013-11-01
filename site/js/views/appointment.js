@@ -14,7 +14,8 @@ app.AppointmentView = Backbone.View.extend({
 	template: _.template("<div class='del'></div><div class='title'> <%= title %></div><div class='app-link'><a class='go' href='/appointments/<%= _id %>'> </a></div> <div class='date'><%= $.format.date( new Date( startTime), 'hh:mm a' ) %></div><div class='clear'></div>"),
 	 events: {
         'click .del': 'deleteAppointment',
-        'click a.go' : 'appDetail'
+        'click a.go' : 'appDetail',
+        'click a.edit-main' : 'editMain'
     },
 	
 	initialize: function(){
@@ -30,13 +31,21 @@ app.AppointmentView = Backbone.View.extend({
 		this.remove();
 	},
 	appDetail: function(e){
-		console.log(this)
+		//console.log(this)
 		    e.preventDefault();
     var url = $(e.currentTarget).attr("href").replace(/^\//, "");
   	 appMain.navigate(url,{trigger:true});
 		
 	
 
+	},
+	
+	editMain : function(){
+		    e.preventDefault();
+    var url = $(e.currentTarget).attr("href").replace(/^\//, "");  
+		console.log('edit')
+		$('.del').show();
+		
 	}
 
 	

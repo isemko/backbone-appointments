@@ -13,15 +13,25 @@
     	<header>
     		<nav>
     			<ul id="main-nav">
-    				<li>Edit</li>
-    				<li>My Appointments</li>
-    				<li>+</li>
+    				<li ><a class='edit-main' href='/edit/'>Edit</a></li>
+    				<li >My Appointments</li>
+    				<li class="add-main">+</li>
     			</ul>
     		</nav>
     	</header>
     	<ul id="appList">
     	</ul>
     	</div>
+    	<script type="text/template" id="item-template">
+  
+    		
+    		<div class='del'></div>
+    		<div class='title'> <%= title %></div>
+    		<div class='app-link'><a class='go' href='/appointments/<%= _id %>'> </a></div>
+    		 <div class='date'><%= $.format.date( new Date( startTime), 'hh:mm a' ) %></div>
+    		 <div class='clear'></div>
+    		
+    	</script>
         <script src="js/lib/jquery-1.10.2.min.js"></script>
          <script src="js/lib/jquery.dateFormat-1.0.js"></script>
         <script src="js/lib/underscore.js"></script>
@@ -30,6 +40,7 @@
         <script src="js/collections/appointments.js"></script>
         <script src="js/views/appointment.js"></script>
         <script src="js/views/appointmentlist.js"></script>
+        <script src="js/views/NavView.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>
