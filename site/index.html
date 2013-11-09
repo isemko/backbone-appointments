@@ -9,13 +9,7 @@
 	</head>
 	<body>
 		<div id="content">
-			<header>
-				<nav>
-					<ul id="main-nav">
-			
-					</ul>
-				</nav>
-			</header>
+	
 			<div id="main-data"></div>
 <div id="home-view">
 	<ul id="users-list"></ul>
@@ -24,7 +18,7 @@
 		<script type="text/template" id="app-template">
 			<div class="fl">
 			<div class='outer' >
-				<div class='del'></div>
+	
 			<div class='title'> <%= title %></div>
 			</div>
 			</div>
@@ -33,6 +27,32 @@
 				<div class='date'><%= $.format.date( new Date( startTime), 'hh:mm a' ) %></div>
 			</div>
 		</div>
+		<div class='clear'></div>
+		</script>
+		<!--
+			"<div class='click-here'>x</div>"+
+	"<div> <%= title %></div><a href='/#appointments/<%= _id %>'> edit app </a>"+
+	"<div class='hidden-delete'>delete</div>"
+			
+			
+		-->
+				<script type="text/template" id="edit-template">
+			<div class="fl">
+			<div class='outer' >
+			<div class='del'></div>
+			<div class='title'> <%= title %></div>
+			</div>
+			</div>
+			
+			<div class="fr"><div class='outer right'>
+				
+				<div class='app-link'><a class='go' href='#appointments/<%= _id %>'> </a></div>
+				<div class='date'><%= $.format.date( new Date( startTime), 'hh:mm a' ) %></div>
+				
+			</div>
+			<div class="fr hidden-delete">delete</div>
+		</div>
+		
 		<div class='clear'></div>
 		</script>
 				<script type="text/template" id="det-template">
