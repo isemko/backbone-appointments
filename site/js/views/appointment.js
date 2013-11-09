@@ -1,52 +1,66 @@
 var app = app || {};
-var viewHelper = {
-	getDateHeader : function(){
-		if(this.startTime ){}
-		
-		
-	}
-	
-	
-}
+
 app.AppointmentView = Backbone.View.extend({
-	tagName: 'li',
-	className: 'appointment-cont',
-	template: _.template("<div class='del'></div><div class='title'> <%= title %></div><div class='app-link'><a class='go' href='/appointments/<%= _id %>'> </a></div> <div class='date'><%= $.format.date( new Date( startTime), 'hh:mm a' ) %></div><div class='clear'></div>"),
-	 events: {
-        'click .del': 'deleteAppointment',
-        'click a.go' : 'appDetail',
-        'click a.edit-main' : 'editMain'
-    },
-	
-	initialize: function(){
-		this.listenTo(this.model, 'change', this.render);
-		
+	tagName : 'li',
+	className : 'appointment-cont',
+	template : _.template($("#app-template").html()),
+	events : {
+	//'click .del' : 'deleteAppointment',
+	'click .go' : 'test',
+		'click a.edit-main' : 'editMain'
 	},
-	render: function(){
-		this.$el.html( this.template( this.model.toJSON() ) );
+
+	initialize : function() {
+		//this.listenTo(this.model, 'change', this.render);
+		 this.listenTo(this.model, 'remove', this.close);
+		  //console.log(this.$el)
+		this.render();
+
+	},
+	render : function() {
+		this.$el.html(this.template(this.model.toJSON()));
 		return this;
 	},
-	deleteAppointment: function(){
-		this.model.destroy();
-		this.remove();
-	},
-	appDetail: function(e){
-		//console.log(this)
-		    e.preventDefault();
-    var url = $(e.currentTarget).attr("href").replace(/^\//, "");
-  	 appMain.navigate(url,{trigger:true});
+	test: function(e){
+		//e.preventDefault();
 		
+	},
+	deleteAppointment : function() {
+		// this.model.trigger("remove");
+		this.$el.remove()
+		this.model.destroy();
 	
+		this.remove();
+		this.stopListening()
+		this.unbind();
+	},
+	appDetail : function(e) {
+	
+		e.preventDefault();
+		var url = $(e.currentTarget).attr("href").replace(/^\//, "");
+		appMain.navigate(url, {
+			trigger : true
+		});
 
 	},
+
+	editMain : function() {
+		//e.preventDefault();
+		//var url = $(e.currentTarget).attr("href").replace(/^\//, "");
 	
-	editMain : function(){
-		    e.preventDefault();
-    var url = $(e.currentTarget).attr("href").replace(/^\//, "");  
-		console.log('edit')
-		$('.del').show();
+		//$('.del').show();
+
+	},
+	close : function(){
+		
+		this.$el.off('click', '.go');
+	 	//this.model.trigger("remove");
+		//this.$el.remove()
+		this.unbind();
+		
+		this.undelegateEvents() 
+		this.remove();
+		this.stopListening()
 		
 	}
-
-	
 })

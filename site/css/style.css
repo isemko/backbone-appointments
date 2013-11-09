@@ -45,57 +45,110 @@ body {
 	font-family: "Proxima Nova", Helvetica, sans-serif;
 	margin: 0;
 	padding: 0;
+}
+#content {
+
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+@media (min-width: 768px){
+	#content{
+		position: relative;
+		width:768px;
+		margin: 0 auto;
+	}
 	
 }
-a{text-decoration:none;}
-a.go{display:block; background: url('../img/go.png');height:16px;width:10px;}
+a {
+	text-decoration: none;
+}
+a.go {
+	display: block;
+	background: url('../img/go.png');
+	height: 16px;
+	width: 10px;
+}
 ul#appList li {
 	font-family: "Proxima Nova Light", Helvetica, sans-serif;
 	list-style-type: none;
-
-    padding: 20px 10px;
-    border-bottom: 1px solid #dddddd;
-    background-color:#fafafa
+	padding: 20px 10px;
+	border-bottom: 1px solid #dddddd;
+	background-color: #fafafa
 }
 nav {
 	margin: 0;
 	padding: 0
 }
-nav ul li{cursor: pointer}
-
-#appList li div{float:left;margin:0px 10px;vertical-align:middle; }
-#appList li .title{margin-top:-5px;}
-#appList li div.app-link, #appList li .date{float:right;}
-#appList li {clear:both;padding:5px 0px}
-
-#content {
-	
-    position: absolute;
-    width: 100%;
-    height: 100%;
-   
-
-}
-.date{font-size:12px; color:#dddddd}
-
 #main-nav {
+	margin: 0 auto;
 	height: 2em;
 	background: #4daf7b;
 	width: 100%;
 	color: #fff;
 	padding-top: 10px;
-	text-align:center;
+	text-align: center;
 }
 #main-nav li {
-	display: inline;
-	
+	display: inline-block;
+	vertical-align: bottom;
+	height: 20px;
 }
 
+nav ul li {
+	cursor: pointer;
+	padding: 0px 30px;
+}
+nav ul li a {
+	color: #fff;
+}
+nav ul li.nav-last {
+	font-weight: bold;
+	font-size: 32px;
+	line-height: 20px
+}
+#appList li .fl {
+	float: left;
+}
+#appList li .fr {
+	float: right
+}
+#appList li div {
+	float: left;
+	margin: 0px 10px;;
+	line-height: 25px;
+}
+#appList li .title {
+	margin-top: -5px;
+}
+#appList li .outer .app-link, #appList li .outer .date, #appList li .outer .r {
+	float: right;
+}
+#appList li {
+	padding: 10px 0px;
+	height: 10px;
+}
 #appList li div.del {
-display:none;
-	padding:12px 0px 5px 0px;
-	width: 17px; height 17px;
-	background:url('../img/del.png');
-cursor:pointer;
-
+	display:block;
+	padding: 12px 0px 5px 0px;
+	width: 17px;height 17px;
+	background: url('../img/del.png');
+	cursor: pointer;
 }
+.app-link {
+	display: block;
+}
+#appList li .outer {
+	display: table;
+	vertical-align: middle;
+}
+#appList li .outer.right {
+}
+
+#appList li .date {
+	font-size: 13px;
+	color: #dddddd;
+	padding: 0px;
+	margin: -2px 0px 0px 0px;
+}
+

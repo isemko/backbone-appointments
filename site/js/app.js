@@ -1,51 +1,90 @@
 var app = app || {};
-/*function AppView() {
-
-	this.showView(view) {
-		if (this.currentView) {
-			this.currentView.close();
-		}
-
-		this.currentView = view;
-		this.currentView.render();
-
-		$("#mainContent").html(this.currentView.el);
-	}
-
-}
-*/
+// Define View Manager to manage view states
 
 app.MyRouter = Backbone.Router.extend({
+	//navView : new app.MainNav(),
+	mainView : '',
 	routes : {
 		"" : "index",
 		"appointments/:id" : "showAppointment",
-		"edit":"editMain"
+		//"edit" : "editMain",
+		"add" : "addApp"
+
 	},
 	initialize : function(options) {
-	
-	
-	// this.collection.on('reset', this.render, this);
+
+		//this.collection.on('reset', this.render, this);
 	},
 
 	index : function() {
-		var navView =  new app.MainNav();
-		var homeView = new app.AppointmentListView();
-		homeView.viewFetch();
-	},
+		//this.releaseNav();
+		this.navView = new app.MainNav();
 
-	showAppointment : function(id) {
-		//change nav, update view to show edit
-	var navView = new app.EditNav();
-	$('.del').show();
-		
+		this.loadView(new app.AppointmentListView());
+					
+			
+
 	},
-	editMain: function(){
-		
-		
+	releaseNav : function() {
+		$(this.navView).empty
+		this.navView.undelegateEvents();
+		this.navView.unbind();
+	},
+	showAppointment : function(id) {
+		//this.releaseNav();
+		//this.navView = new app.MainNav();
+		//$('.del, .app-link').unbind();
+		var appointment = new app.Appointment({
+			_id : id
+		});
+		var self = this;
+		appointment.fetch({
+			success : function(data) {
+	
+				self.loadView( new app.AppointmentDetailView({
+					model : appointment
+
+				}))
+			}
+		})
+	},
+	editMain : function(id) {
+		//this.releaseNav();
+		//this.navView = new app.EditNav();
+		//this.loadView(new app.AppointmentListView());
+		//$('.del, .app-link').show();
+
+	},
+	addApp : function() {
+		this.releaseNav();
+		var navView = new app.AddNav();
+
+	},
+	loadView : function(view) {
+		this.view && (this.view.close ? this.view.close() : this.view.remove());
+		this.view = view;
+		//console.log(this.view)
 	}
+	
+	
 });
 $(function() {
-	
+
 	appMain = new app.MyRouter();
-	Backbone.history.start({pushState: true});
+	Backbone.history.start({
+		pushState : false
+	});
 });
+/*
+jQuery.post( '/api/books', {
+    'title': 'JavaScript the good parts',
+    'author': 'Douglas Crockford',
+    'releaseDate': new Date( 2008, 4, 1 ).getTime()
+}, function(data, textStatus, jqXHR) {
+    console.log( 'Post response:' );
+    console.dir( data );
+    console.log( textStatus );
+    console.dir( jqXHR );
+});
+ * /
+ */
