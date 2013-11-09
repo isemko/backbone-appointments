@@ -98,8 +98,10 @@ nav {
 
 nav ul li {
 	cursor: pointer;
-	padding: 0px 30px;
+	padding: 0px 10px;
+
 }
+
 nav ul li a {
 	color: #fff;
 }
@@ -118,11 +120,12 @@ nav ul li.nav-last {
 }
 #appList li div {
 	float: left;
-	margin: 0px 10px;;
+	margin: 0px 0px;;
 	line-height: 25px;
 }
 #appList li .title {
 	margin-top: -5px;
+margin-left:10px
 }
 #appList li .outer .app-link, #appList li .outer .date, #appList li .outer .r, #appList li .outer .hidden-delete {
 	
@@ -144,7 +147,7 @@ nav ul li.nav-last {
  .fl.slide-left{}
 .hidden-delete{width:100px; background:#e83c3c; color:#fff; -webkit-animation:moveleft .2s ;-moz-animation:moveleft .2s; animation:moveleft .5s; position:relative; top:-20px;height:20px;right:-30px;padding:10px 20px 20px}
 #appList li {
-	padding: 10px 0px;
+	padding: 0px 0px;
 	height: 10px;
 }
 #appList li div.del {
