@@ -1,115 +1,253 @@
+var vent = _.extend({}, Backbone.Events);
+$.expr.cacheLength = 1;
 var Model = Backbone.Model.extend({
-defaults : {
-    id : '',
-    name : ''
-}
+	idAttribute : '_id',
+	urlRoot : '/api/appointments',
+	defaults : {
+		id : '',
+		name : ''
+	}
 
 });
 var Collection = Backbone.Collection.extend({
-model : Model
+	url : '/api/appointments',
+	model : Model
 })
-var HomeView = Backbone.View.extend({
-tagName : "div",
-id : "home-view",
-initialize : function() {
-    $("body").html(this.el);
-    this.render();
-},
-render : function() {
-    this.$el.html("<h1>This is the home page</h1><a href='#users'>Go to users</a>");
-}
+
+
+var AppointmentView = Backbone.View.extend({
+	tagName : "li",
+	template : _.template($('#app-template').html()),
+	events : {
+	},
+	initialize : function(e) {
+		this.listenTo(this.model, 'change', this.render)
+		this.listenTo(this.model, 'destroy', this.remove);
+		this.render();
+	},
+	render : function() {
+
+		this.$el.html(this.template(this.model.toJSON()));
+
+	}
 });
+var AppointmentDetailView = AppointmentView.extend({
+	tagName : "ul",
+	id : "Appointments-list",
+	template : _.template('<li><%= _id %></li>'),
+	initialize : function() {
+		this.listenTo(this.model, 'change', this.render)
+		$("#main-data").html(this.el);
+		this.render();
+		this.$el.before("<a href='#edit'>edit Appointments</a>&nbsp;<a href='#home'>go home</a>");
+	},
+	render : function() {
 
-var UserView = Backbone.View.extend({
-tagName : "li",
-initialize : function(e) {
+		this.$el.html(this.template(this.model.toJSON()));
+		return this;
 
-    _.bindAll(this, "alertName");
-    this.render();
-},
-events : {
-    "click" : "alertName"
-},
-render : function() {
-    this.$el.html("Hi, my name is " + this.model.get('name'));
-},
-alertName : function() {
-    alert(this.model.get('name'));
-}
+	}
+})
+/*
+ * 
+ * this.$el.before("<header>"+
+				"<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>"+
+				"<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>"
+				+"</nav></header>"
+				);
+				 _.template("<div class='de'>x</div>"+
+	"<div> <%= title %></div><a href='/#appointments/<%= _id %>'> edit app </a>"+
+	"<div class='hidden-delete'>delete</div>")
+ */
+var EditAppointmentView = AppointmentView.extend({
+	template : _.template($('#edit-template').html()),
+	initialize : function() {
+
+		this.render();
+	
+
+	},
+	events : {
+		'click .del' : 'showDelete',
+		'click .hidden-delete' : 'removeAll'
+	},
+	removeAll : function() {
+
+		this.$el.empty();
+		this.model.destroy();
+		this.remove();
+		this.unbind();
+		this.off()
+	
+		//vent.trigger('singleRemove', this);
+
+	},
+	showDelete : function() {
+		this.$el.find('.hidden-delete').show();
+		this.$el.find('.fl').addClass('slide-left')
+	/*	this.$el.find('.fl').css({
+			'margin-left': '-100px'
+		})*/
+	}
+})
+
+var AppointmentsView = Backbone.View.extend({
+	tagName : "ul",
+	id : "appList",
+	subViews : [],
+	
+	initialize : function(e) {
+
+		this.collection = new Collection();
+		$("#main-data").html(this.el);
+		
+		var self = this;
+		this.collection.fetch({
+		}).complete(function() {
+			self.render();
+		});
+
+	},
+	render : function() {
+		var self = this;
+
+		this.collection.forEach(function(model) {
+
+			var cView = new AppointmentView({
+				model : model
+			})
+
+			self.subViews.push(cView);
+			self.$el.append(cView.el);
+			
+		})
+
+		this.$el.before("<header>"+
+				"<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>"+
+				"<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>"
+				+"</nav></header>"
+				);
+
+	},
+
+	close : function() {
+		//$('.hidden-delete').unbind();
+		while (this.subViews.length) {
+			var x =this.subViews.pop()
+	
+			x.remove();
+			x.unbind();
+			x.off()
+		}
+		
+		this.remove();
+		this.unbind();
+	}
 });
-var UsersView = Backbone.View.extend({
-tagName : "ul",
-id : "users-list",
-subViews : [],
-initialize : function(e) {
-    $("body").html(this.el);
-    this.collection = new Collection([{
-        id : '4',
-        name : 'candy'
-    }, {
-        id : '2',
-        name : 'soap'
-    }, {
-        id : '3',
-        name : 'pepper'
-    }]);
-    console.log(this.collection)
+var EditAppointmentsView = AppointmentsView.extend({
+	id : "appList",
+	initialize : function(e) {
+		//vent.on('singleRemove', this.removeOne, this);
 
-    this.render();
-},
-render : function() {
-    var self = this;
-    this.collection.forEach(function(model) {
+		this.collection = new Collection();
+		$("#main-data").html(this.el);
 
-        var cView = new UserView({
-            model : model
-        })
-        self.subViews.push(cView);
-        self.$el.append(cView.el);
-    })
+		var self = this;
+		this.collection.fetch({
+		}).complete(function() {
+			self.render();
+		});
+	},
+	render : function() {
+		var self = this;
+		//this.$el.hide();
+		this.collection.forEach(function(model) {
 
-    this.$el.after("<li><a href='#home'>Go to home</a></li>");
-},
-close : function() {
+			var cView = new EditAppointmentView({
+				model : model
+			})
+			self.subViews.push(cView);
 
-    while (this.subViews.length) {
-        this.subViews.pop().remove();
+			self.$el.append(cView.el);
+			
+		})
 
-    }
+			 this.$el.before("<header>"+
+				"<nav><ul id='main-nav'><li><a href='#home'>Close</a></li><li><a href='#edit'>Edit Appointments</a></li>"+
+				"<li  class='nav-last'></li></ul>"
+				+"</nav></header>"
+				);
+		//this.$el.slideDown("fast");
+	},
+	removeOne : function(e) {
 
-    this.remove();
-}
-});
+		for (var i = 0; i < this.subViews.length; i++) {
+			if (this.subViews[i].cid == e.cid) {
+
+				//this.subViews[i].remove()
+				//this.subViews.splice(i, 1)
+
+			}
+
+		}
+
+	}
+})
 var Router = Backbone.Router.extend({
-routes : {
-    "" : "home",
-    "home" : "home",
-    "users" : "users"
-},
-initialize : function(options) {
-    console.log('router')
+	routes : {
+		"" : "Appointments",
+		"home" : "Appointments",
+		"edit" : "editAppointments",
+		"appointments/:id" : "editAppointment"
+	},
+	initialize : function(options) {
 
- },
+	},
+	Appointments : function() {
+		this.loadView(new AppointmentsView());
 
-  home : function(e) {
-     console.log('home')
-     this.loadView(new HomeView());
+	},
+	editAppointments : function() {
+		this.loadView(new EditAppointmentsView());
 
- },
-users : function(e) {
-    console.log('users');
-      this.loadView(new UsersView());
+	},
+	editAppointment : function(id) {
 
-},
-loadView : function(view) {
-    this.view && (this.view.close ? this.view.close() : this.view.remove());
-    this.view = view;
-}
+		var appointment = new Model({
+			_id : id
+		});
+		var self = this;
+		appointment.fetch({
+			success : function(data) {
+				self.loadView(new AppointmentDetailView({
+					model : appointment
+				}))
+			}
+		})
+
+	},
+	loadView : function(view) {
+		this.view && (this.view.close ? this.view.close() : this.view.remove());
+		this.view = view;
+	}
 });
 $(document).ready(function() {
 
-var router = new Router();
-Backbone.history.start({
+	var router = new Router();
+	Backbone.history.start({
 
+	});
 });
-});
+/*
+ for(var i=0; i<10; i++){jQuery.post( '/api/appointments', {
+ 'title': 'appointment' +i,
+ 'startTime': new Date( 20013, 6, 45).getTime(),
+ 'endTime': new Date( 20013, 7, 15 ).getTime()
+ }, function(data, textStatus, jqXHR) {
+ console.log( 'Post response:' );
+ console.dir( data );
+ console.log( textStatus );
+ console.dir( jqXHR );
+ });}
+ * /
+ */
