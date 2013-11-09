@@ -49,7 +49,7 @@ body {
 #content {
 
 	position: absolute;
-    overflow:auto;
+    overflow:hidden;
 	width: 100%;
 	height: 100%;
 }
@@ -76,6 +76,14 @@ ul#appList li {
 	padding: 20px 10px;
 	border-bottom: 1px solid #dddddd;
 	background-color: #fafafa
+}
+ul#appList li.date-head {
+	font-size:.6em;
+	list-style-type: none;
+	padding: 5px 10px;
+	border-bottom: 1px solid #dddddd;
+	background-color: #333;
+	color:#fff
 }
 nav {
 	margin: 0;

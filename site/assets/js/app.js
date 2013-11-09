@@ -14,7 +14,6 @@ var Collection = Backbone.Collection.extend({
 	model : Model
 })
 
-
 var AppointmentView = Backbone.View.extend({
 	tagName : "li",
 	template : _.template($('#app-template').html()),
@@ -49,22 +48,21 @@ var AppointmentDetailView = AppointmentView.extend({
 	}
 })
 /*
- * 
+ *
  * this.$el.before("<header>"+
-				"<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>"+
-				"<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>"
-				+"</nav></header>"
-				);
-				 _.template("<div class='de'>x</div>"+
-	"<div> <%= title %></div><a href='/#appointments/<%= _id %>'> edit app </a>"+
-	"<div class='hidden-delete'>delete</div>")
+ "<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>"+
+ "<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>"
+ +"</nav></header>"
+ );
+ _.template("<div class='de'>x</div>"+
+ "<div> <%= title %></div><a href='/#appointments/<%= _id %>'> edit app </a>"+
+ "<div class='hidden-delete'>delete</div>")
  */
 var EditAppointmentView = AppointmentView.extend({
 	template : _.template($('#edit-template').html()),
 	initialize : function() {
 
 		this.render();
-	
 
 	},
 	events : {
@@ -78,16 +76,16 @@ var EditAppointmentView = AppointmentView.extend({
 		this.remove();
 		this.unbind();
 		this.off()
-	
+
 		//vent.trigger('singleRemove', this);
 
 	},
 	showDelete : function() {
 		this.$el.find('.hidden-delete').show();
 		this.$el.find('.fl').addClass('slide-left')
-	/*	this.$el.find('.fl').css({
-			'margin-left': '-100px'
-		})*/
+		/*	this.$el.find('.fl').css({
+		 'margin-left': '-100px'
+		 })*/
 	}
 })
 
@@ -95,12 +93,19 @@ var AppointmentsView = Backbone.View.extend({
 	tagName : "ul",
 	id : "appList",
 	subViews : [],
-	
+
 	initialize : function(e) {
 
 		this.collection = new Collection();
+		// sort by date ascending
+		this.collection.comparator = function(m) {
+			return m.get("startTime");
+		};
+
+		this.collection.sort();
+
 		$("#main-data").html(this.el);
-		
+
 		var self = this;
 		this.collection.fetch({
 		}).complete(function() {
@@ -108,38 +113,43 @@ var AppointmentsView = Backbone.View.extend({
 		});
 
 	},
+	formatDate : function(d){
+		return $.format.date(new Date(d), 'ddd, MMMM d, yyyy').toUpperCase()
+	},
 	render : function() {
 		var self = this;
+		var temp_date = new Date(this.collection.first().get('startTime'));
 
+		self.$el.append('<li class="date-head">' + this.formatDate(temp_date) + '</li>');
 		this.collection.forEach(function(model) {
 
 			var cView = new AppointmentView({
 				model : model
 			})
+			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
+				temp_date = model.get('startTime')
+				self.$el.append('<li class="date-head">' + self.formatDate(temp_date)  + '</li>');
+			}
 
 			self.subViews.push(cView);
 			self.$el.append(cView.el);
-			
+
 		})
 
-		this.$el.before("<header>"+
-				"<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>"+
-				"<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>"
-				+"</nav></header>"
-				);
+		this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>" + "<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>" + "</nav></header>");
 
 	},
 
 	close : function() {
 		//$('.hidden-delete').unbind();
 		while (this.subViews.length) {
-			var x =this.subViews.pop()
-	
+			var x = this.subViews.pop()
+
 			x.remove();
 			x.unbind();
 			x.off()
 		}
-		
+
 		this.remove();
 		this.unbind();
 	}
@@ -161,22 +171,25 @@ var EditAppointmentsView = AppointmentsView.extend({
 	render : function() {
 		var self = this;
 		//this.$el.hide();
+		var temp_date = new Date(this.collection.first().get('startTime'));
+
+		self.$el.append('<li class="date-head">' + $.format.date(new Date(temp_date), 'ddd, MMMM d,  yyyy').toUpperCase() + '</li>');
 		this.collection.forEach(function(model) {
 
 			var cView = new EditAppointmentView({
 				model : model
 			})
-			self.subViews.push(cView);
+			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
+				temp_date = model.get('startTime')
+				self.$el.append('<li class="date-head">' + $.format.date(new Date(temp_date), 'ddd, MMMM d,  yyyy').toUpperCase() + '</li>');
+			}
 
+			self.subViews.push(cView);
 			self.$el.append(cView.el);
-			
+
 		})
 
-			 this.$el.before("<header>"+
-				"<nav><ul id='main-nav'><li><a href='#home'>Close</a></li><li><a href='#edit'>Edit Appointments</a></li>"+
-				"<li  class='nav-last'></li></ul>"
-				+"</nav></header>"
-				);
+		this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#home'>Done</a></li><li><a href='#edit'>Edit Appointments</a></li>" + "<li  class='nav-last'></li></ul>" + "</nav></header>");
 		//this.$el.slideDown("fast");
 	},
 	removeOne : function(e) {
