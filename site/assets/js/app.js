@@ -20,7 +20,7 @@ var AppointmentView = Backbone.View.extend({
 	events : {
 	},
 	initialize : function(e) {
-		this.listenTo(this.model, 'change', this.render)
+		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.render();
 	},
@@ -32,13 +32,14 @@ var AppointmentView = Backbone.View.extend({
 });
 var AppointmentDetailView = AppointmentView.extend({
 	tagName : "ul",
-	id : "Appointments-list",
-	template : _.template('<li><%= _id %></li>'),
+	id : "appList",
+
+	template : _.template($('#edit-app').html()),
 	initialize : function() {
-		this.listenTo(this.model, 'change', this.render)
+		this.listenTo(this.model, 'change', this.render);
 		$("#main-data").html(this.el);
 		this.render();
-		this.$el.before("<a href='#edit'>edit Appointments</a>&nbsp;<a href='#home'>go home</a>");
+		//this.$el.before("<a href='#edit'>edit Appointments</a>&nbsp;<a href='#home'>go home</a>");
 	},
 	render : function() {
 
@@ -47,20 +48,13 @@ var AppointmentDetailView = AppointmentView.extend({
 
 	}
 })
-/*
- *
- * this.$el.before("<header>"+
- "<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>"+
- "<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>"
- +"</nav></header>"
- );
- _.template("<div class='de'>x</div>"+
- "<div> <%= title %></div><a href='/#appointments/<%= _id %>'> edit app </a>"+
- "<div class='hidden-delete'>delete</div>")
- */
+
 var EditAppointmentView = AppointmentView.extend({
+	tagName: 'li',
 	template : _.template($('#edit-template').html()),
-	initialize : function() {
+	initialize : function(options) {
+	
+		this.$el.attr( "class", options.classId);
 
 		this.render();
 
@@ -70,25 +64,41 @@ var EditAppointmentView = AppointmentView.extend({
 		'click .hidden-delete' : 'removeAll'
 	},
 	removeAll : function() {
-
+		vent.trigger('dateheadercheck', this);
 		this.$el.empty();
 		this.model.destroy();
 		this.remove();
 		this.unbind();
-		this.off()
-
-		//vent.trigger('singleRemove', this);
-
+		this.off();
+		return this;
 	},
 	showDelete : function() {
 		this.$el.find('.hidden-delete').show();
-		this.$el.find('.fl').addClass('slide-left')
-		/*	this.$el.find('.fl').css({
-		 'margin-left': '-100px'
-		 })*/
+		this.$el.find('.fl').addClass('slide-left');
+
 	}
 })
 
+var HeaderView = Backbone.View.extend({
+	tagName: 'li',
+	className : 'date-head',
+	template: _.template("<%=  $.format.date(new Date(temp_date), 'ddd, MMMM d, yyyy').toUpperCase() %> "),
+	initialize : function(options) {
+		
+		this.$el.attr( "class", options.classId+ ' '+this.$el.attr('class'));
+		this.model = options;
+		//this.listenTo(this.model, 'change', this.render);
+		this.id = this.model.id;
+		this.render();
+	},
+	render : function() {
+
+		this.$el.html(this.template(this.model));
+	
+		return this;
+	}
+	
+})
 var AppointmentsView = Backbone.View.extend({
 	tagName : "ul",
 	id : "appList",
@@ -113,14 +123,15 @@ var AppointmentsView = Backbone.View.extend({
 		});
 
 	},
-	formatDate : function(d){
+	formatDate : function(d) {
 		return $.format.date(new Date(d), 'ddd, MMMM d, yyyy').toUpperCase()
 	},
 	render : function() {
 		var self = this;
 		var temp_date = new Date(this.collection.first().get('startTime'));
-
-		self.$el.append('<li class="date-head">' + this.formatDate(temp_date) + '</li>');
+		var hView = new HeaderView({temp_date: temp_date, id:this.collection.first().get('_id') });
+		self.$el.append(hView.el);
+		self.subViews.push(hView);
 		this.collection.forEach(function(model) {
 
 			var cView = new AppointmentView({
@@ -128,7 +139,9 @@ var AppointmentsView = Backbone.View.extend({
 			})
 			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
 				temp_date = model.get('startTime')
-				self.$el.append('<li class="date-head">' + self.formatDate(temp_date)  + '</li>');
+				var hView = new HeaderView({temp_date: temp_date, id:model.get('_id') });
+				self.$el.append(hView.el);
+				self.subViews.push(hView);
 			}
 
 			self.subViews.push(cView);
@@ -143,23 +156,31 @@ var AppointmentsView = Backbone.View.extend({
 	close : function() {
 		//$('.hidden-delete').unbind();
 		while (this.subViews.length) {
-			var x = this.subViews.pop()
-
+			var x = this.subViews.pop();
+			
 			x.remove();
 			x.unbind();
-			x.off()
+			x.off();
 		}
-
 		this.remove();
 		this.unbind();
+		this.off();
+		vent.off('dateheadercheck', this.checkHeader, this);
 	}
 });
 var EditAppointmentsView = AppointmentsView.extend({
 	id : "appList",
 	initialize : function(e) {
-		//vent.on('singleRemove', this.removeOne, this);
-
+		vent.on('dateheadercheck', this.checkHeader, this);
+		
 		this.collection = new Collection();
+		// sort by date ascending
+		this.collection.comparator = function(m) {
+			return m.get("startTime");
+		};
+
+		this.collection.sort();
+		//this.listenTo(this.collection, 'sort', this.render);
 		$("#main-data").html(this.el);
 
 		var self = this;
@@ -170,41 +191,66 @@ var EditAppointmentsView = AppointmentsView.extend({
 	},
 	render : function() {
 		var self = this;
-		//this.$el.hide();
-		var temp_date = new Date(this.collection.first().get('startTime'));
-
-		self.$el.append('<li class="date-head">' + $.format.date(new Date(temp_date), 'ddd, MMMM d,  yyyy').toUpperCase() + '</li>');
+		var temp_model = this.collection.first();
+		var temp_date = new Date(temp_model.get('startTime'));
+		var hView = new HeaderView({temp_date: temp_date, id:temp_model.get('_id') , classId: temp_model.get('_id')} );
+		self.$el.append(hView.el);
+		self.subViews.push(hView);
+	
 		this.collection.forEach(function(model) {
 
-			var cView = new EditAppointmentView({
-				model : model
-			})
-			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
-				temp_date = model.get('startTime')
-				self.$el.append('<li class="date-head">' + $.format.date(new Date(temp_date), 'ddd, MMMM d,  yyyy').toUpperCase() + '</li>');
-			}
 
+			//need new way of referencing 
+			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
+				temp_model = model;
+				temp_date = temp_model.get('startTime')
+				var hView = new HeaderView({temp_date: temp_date, id :temp_model.get('_id'), classId: temp_model.get('_id') });
+				self.$el.append(hView.el);
+				self.subViews.push(hView);
+			}
+			var cView = new EditAppointmentView({
+				model : model,
+				headId : model.get('_id'),
+				classId : temp_model.get('_id')
+			});
 			self.subViews.push(cView);
 			self.$el.append(cView.el);
 
 		})
 
 		this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#home'>Done</a></li><li><a href='#edit'>Edit Appointments</a></li>" + "<li  class='nav-last'></li></ul>" + "</nav></header>");
-		//this.$el.slideDown("fast");
+
 	},
-	removeOne : function(e) {
+	checkHeader : function(e) {
+		//find view from subViews that has the id  and remove it 
+		/*
+		 * assign class to each appointment on the day and the day header.  do a count ( $items = $('class-name'); $items.length;  )
+		 * if length is == to 1 remove header (no more sub items left).
+		 * 
+		 * 
+		 */
 
-		for (var i = 0; i < this.subViews.length; i++) {
-			if (this.subViews[i].cid == e.cid) {
-
-				//this.subViews[i].remove()
-				//this.subViews.splice(i, 1)
-
+		$listCount = $('.'+$(e.$el[0]).attr('class')).length-1;
+		if ($listCount == 1) {
+			for( var i =  this.subViews.length-1 ; i>=0; i--){
+		var check =(this.subViews[i].id ? this.subViews[i].id : this.subViews[i].model.id )
+				if(check == $(e.$el[0]).attr('class')){
+					var x = this.subViews.splice(i, 1);
+					x[0].remove();
+					x[0].unbind();
+				}
 			}
-
 		}
+	},
+	compDates : function(e, model){
+		var timeCheck = {
 
+			day : new Date((this.collection.get(e.model.id)).get('startTime')).getDay(),
+			month : new Date((this.collection.get(e.model.id)).get('startTime')).getMonth(),
+		}
+		return (new Date(model.get('startTime')).getMonth() == timeCheck.month && new Date(model.get('startTime')).getDay() == timeCheck.day)
 	}
+	
 })
 var Router = Backbone.Router.extend({
 	routes : {
