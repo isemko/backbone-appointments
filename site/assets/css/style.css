@@ -50,8 +50,13 @@ body {
 
 	position: absolute;
     overflow-x:hidden;
+
 	width: 100%;
 	height: 100%;
+}
+#content.editApp{
+	  overflow-x:visible;
+	
 }
 @media (min-width: 768px){
 	#content{
@@ -69,21 +74,24 @@ a.go {
 	background: url('../img/go.png');
 	height: 16px;
 	width: 10px;
+
 }
 ul#appList li {
 	font-family: "Proxima Nova Light", Helvetica, sans-serif;
 	list-style-type: none;
-	padding: 20px 10px;
+	padding: 20px 0px 20px 10px;
 	border-bottom: 1px solid #dddddd;
-	background-color: #fafafa
+	background-color: #fafafa;
+
 }
 ul#appList li.date-head {
-	font-size:.6em;
+	font-size:10px;
 	list-style-type: none;
-	padding: 5px 10px;
+	padding: 10px 10px;
 	border-bottom: 1px solid #dddddd;
 	background-color: #5a5651;
-	color:#fff
+	color:#fff;
+
 }
 nav {
 	margin: 0;
@@ -116,7 +124,7 @@ nav ul li a {
 nav ul li.nav-last {
 	font-weight: bold;
 	font-size: 32px;
-	line-height: 20px
+	line-height: 25px
 }
 #appList li .fl {
 
@@ -124,8 +132,11 @@ nav ul li.nav-last {
 }
 #appList li .fr {
 
-	float: right
+	float: right;
+
+margin-top:-20px;
 }
+#appList li .fr.hidden-delete-show{height:32px;margin-top:-1px}
 #appList li div {
 	float: left;
 	margin: 0px 0px;;
@@ -139,6 +150,27 @@ margin-left:10px
 	
 	float: right;
 }
+.hidden-delete{display:none;}
+
+.hidden-delete-show{width:100px; background:#e83c3c; color:#fff; -webkit-animation:moveleft .2s 1; 
+animation:moveleft .5s 1;  top:10px; padding:10px;height:1px}
+
+ .slide-left{-webkit-animation: hideleft .2s 1;
+animation:hideleft .5s 1;}
+ #appList li div.fl.slide-left {
+	margin-left:-100px;
+}
+
+@keyframes moveleft{
+  0%{width:0px},
+  50%{width:50%},
+  100%{width:100%}
+}
+@keyframes hideleft{
+  0%{margin-left:0px},
+    50%{margin-left:-50px},
+  100%{margin-left:-100px}
+}
 @-webkit-keyframes moveleft{
   0%{width:0px},
   50%{width:50%},
@@ -146,14 +178,11 @@ margin-left:10px
 }
 @-webkit-keyframes hideleft{
   0%{margin-left:0px},
+      50%{margin-left:-50px},
   100%{margin-left:-100px}
 }
- .slide-left{-webkit-animation: hideleft .2s 1;}
- #appList li div.fl.slide-left {
-	margin-left:-100px;
-}
- .fl.slide-left{}
-.hidden-delete{width:100px; background:#e83c3c; color:#fff; -webkit-animation:moveleft .2s ;-moz-animation:moveleft .2s; animation:moveleft .5s; position:relative; top:-20px;height:20px;right:-30px;padding:10px 20px 20px}
+
+
 #appList li {
 	padding: 0px 0px;
 	height: 10px;
@@ -166,7 +195,7 @@ margin-left:10px
 	cursor: pointer;
 }
 .app-link {
-	display: none;
+	display:block;
 }
 #appList li .outer {
 	display: table;
@@ -177,8 +206,11 @@ margin-left:10px
 
 #appList li .date {
 	font-size: 13px;
+
 	color: #dddddd;
-	padding: 0px;
+	padding: 0px 10px;
 	margin: -2px 0px 0px 0px;
+padding:20px 10px
 }
-.hidden-delete{display:none;}
+.clear{clear:both;height:0px}
+input{border:0; background:inherit;}

@@ -1,6 +1,5 @@
 var vent = _.extend({}, Backbone.Events);
 $.expr.cacheLength = 1;
-
 var Model = Backbone.Model.extend({
 	idAttribute : '_id',
 	urlRoot : '/api/appointments',
@@ -34,93 +33,58 @@ var AppointmentView = Backbone.View.extend({
 var AppointmentDetailView = AppointmentView.extend({
 	tagName : "ul",
 	id : "appList",
-	template : _.template($('#edit-app').html()),
-	events : {
-		'click #update' : 'updateAppointment'
-	},
+	template : _.template('<li><%= _id %></li>'),
 	initialize : function() {
-		
 		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model, 'destroy', this.remove);
 		$("#main-data").html(this.el);
-		$('#content').addClass('editApp');
 		this.render();
-		jQuery.webshims.polyfill('forms forms-ext');
-		this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>" + "<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>" + "</nav></header>");
-
+		this.$el.before("<a href='#edit'>edit Appointments</a>&nbsp;<a href='#home'>go home</a>");
 	},
 	render : function() {
-		
+
 		this.$el.html(this.template(this.model.toJSON()));
-	
 		return this;
-
-	},
-	updateAppointment : function(e) {
-		e.preventDefault();
-		var formData = {};
-		var startDate = endDate = '';
-		$('#appList li').children('input, div input').each(function(i, el) {
-			if (el.id == 'entry-day-end-time') {
-				endDate = $(el).val().split(/[-T:]+/);
-			} else if (el.id == 'entry-day-time') {
-				formData['startTime'] = $(el).val();
-				//startDate = $(el).val().split(/[-T:]+/);
-			} else {
-				formData[el.id] = $(el).val();
-			}
-		});
-		/*formData['startTime'] = new Date(parseInt(startDate[0]), parseInt(startDate[1]), parseInt(startDate[2]), parseInt(startDate[3]), parseInt(startDate[4]));*/
-		this.model.save(formData);
-		this.$el.updatePolyfill();
-
-	},
-	close : function() {
-		$('#content').removeClass('editApp');
-		this.$el.empty();
-		this.remove();
-		this.el = null;
-		this.$el = null;
 
 	}
 })
 
 var EditAppointmentView = AppointmentView.extend({
-	tagName : 'li',
+	tagName: 'li',
 	template : _.template($('#edit-template').html()),
 	initialize : function(options) {
-
-		this.$el.attr("class", options.classId);
+	
+		this.$el.attr( "class", options.classId);
 
 		this.render();
 
 	},
 	events : {
 		'click .del' : 'showDelete',
-		'click .hidden-delete-show' : 'removeAll'
+		'click .hidden-delete' : 'removeAll'
 	},
 	removeAll : function() {
 		vent.trigger('dateheadercheck', this);
 		this.$el.empty();
 		this.model.destroy();
 		this.remove();
-
+		this.unbind();
+		this.off();
 		return this;
 	},
 	showDelete : function() {
-		this.$el.find('.hidden-delete').addClass('hidden-delete-show').removeClass('hidden-delete');
+		this.$el.find('.hidden-delete').show();
 		this.$el.find('.fl').addClass('slide-left');
 
 	}
 })
 
 var HeaderView = Backbone.View.extend({
-	tagName : 'li',
+	tagName: 'li',
 	className : 'date-head',
-	template : _.template("<%=  $.format.date(new Date(temp_date), 'ddd, MMMM d, yyyy').toUpperCase() %> "),
+	template: _.template("<%=  $.format.date(new Date(temp_date), 'ddd, MMMM d, yyyy').toUpperCase() %> "),
 	initialize : function(options) {
-
-		this.$el.attr("class", options.classId + ' ' + this.$el.attr('class'));
+		
+		this.$el.attr( "class", options.classId+ ' '+this.$el.attr('class'));
 		this.model = options;
 		//this.listenTo(this.model, 'change', this.render);
 		this.id = this.model.id;
@@ -129,9 +93,10 @@ var HeaderView = Backbone.View.extend({
 	render : function() {
 
 		this.$el.html(this.template(this.model));
-
+	
 		return this;
 	}
+	
 })
 var AppointmentsView = Backbone.View.extend({
 	tagName : "ul",
@@ -163,10 +128,7 @@ var AppointmentsView = Backbone.View.extend({
 	render : function() {
 		var self = this;
 		var temp_date = new Date(this.collection.first().get('startTime'));
-		var hView = new HeaderView({
-			temp_date : temp_date,
-			id : this.collection.first().get('_id')
-		});
+		var hView = new HeaderView({temp_date: temp_date, id:this.collection.first().get('_id') });
 		self.$el.append(hView.el);
 		self.subViews.push(hView);
 		this.collection.forEach(function(model) {
@@ -176,10 +138,7 @@ var AppointmentsView = Backbone.View.extend({
 			})
 			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
 				temp_date = model.get('startTime')
-				var hView = new HeaderView({
-					temp_date : temp_date,
-					id : model.get('_id')
-				});
+				var hView = new HeaderView({temp_date: temp_date, id:model.get('_id') });
 				self.$el.append(hView.el);
 				self.subViews.push(hView);
 			}
@@ -197,19 +156,14 @@ var AppointmentsView = Backbone.View.extend({
 		//$('.hidden-delete').unbind();
 		while (this.subViews.length) {
 			var x = this.subViews.pop();
-			x.$el.empty();
-			x.$el.remove();
-			x.remove();
 			
+			x.remove();
 			x.unbind();
 			x.off();
 		}
-		this.$el.remove();
 		this.remove();
-		this.el = null;
-		// ???
-		this.$el = null;
-		// ???
+		this.unbind();
+		this.off();
 		vent.off('dateheadercheck', this.checkHeader, this);
 	}
 });
@@ -217,7 +171,7 @@ var EditAppointmentsView = AppointmentsView.extend({
 	id : "appList",
 	initialize : function(e) {
 		vent.on('dateheadercheck', this.checkHeader, this);
-
+		
 		this.collection = new Collection();
 		// sort by date ascending
 		this.collection.comparator = function(m) {
@@ -238,25 +192,18 @@ var EditAppointmentsView = AppointmentsView.extend({
 		var self = this;
 		var temp_model = this.collection.first();
 		var temp_date = new Date(temp_model.get('startTime'));
-		var hView = new HeaderView({
-			temp_date : temp_date,
-			id : temp_model.get('_id'),
-			classId : temp_model.get('_id')
-		});
+		var hView = new HeaderView({temp_date: temp_date, id:temp_model.get('_id') , classId: temp_model.get('_id')} );
 		self.$el.append(hView.el);
 		self.subViews.push(hView);
-
+	
 		this.collection.forEach(function(model) {
 
-			//need new way of referencing
+
+			//need new way of referencing 
 			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
 				temp_model = model;
 				temp_date = temp_model.get('startTime')
-				var hView = new HeaderView({
-					temp_date : temp_date,
-					id : temp_model.get('_id'),
-					classId : temp_model.get('_id')
-				});
+				var hView = new HeaderView({temp_date: temp_date, id :temp_model.get('_id'), classId: temp_model.get('_id') });
 				self.$el.append(hView.el);
 				self.subViews.push(hView);
 			}
@@ -274,37 +221,27 @@ var EditAppointmentsView = AppointmentsView.extend({
 
 	},
 	checkHeader : function(e) {
-		//find total number of the day's class
-		$listCount = $('.' + $(e.$el[0]).attr('class')).length - 1;
-		// if only one, it is the heeader
+		//find view from subViews that has the id  and remove it 
+		/*
+		 * assign class to each appointment on the day and the day header.  do a count ( $items = $('class-name'); $items.length;  )
+		 * if length is == to 1 remove header (no more sub items left).
+		 * 
+		 * 
+		 */
+
+		$listCount = $('.'+$(e.$el[0]).attr('class')).length-1;
 		if ($listCount == 1) {
-			//search views remove the header from subviews
-			for (var i = this.subViews.length - 1; i >= 0; i--) {
-				var check = (this.subViews[i].id ? this.subViews[i].id : this.subViews[i].model.id )
-				if (check == $(e.$el[0]).attr('class')) {
+			for( var i =  this.subViews.length-1 ; i>=0; i--){
+		var check =(this.subViews[i].id ? this.subViews[i].id : this.subViews[i].model.id )
+				if(check == $(e.$el[0]).attr('class')){
 					var x = this.subViews.splice(i, 1);
 					x[0].remove();
+					x[0].unbind();
 				}
 			}
-		} else {
-			// if it is not the header, remove based on id in removeOneSubview
-			this.removeOneSubview(e);
 		}
-
 	},
-	removeOneSubview : function(e) {
-		for (var i = this.subViews.length - 1; i >= 0; i--) {
-			if (this.subViews[i].model.id == e.model.id) {
-				if (!e.$el.find('.date-head')) {
-					var x = this.subViews.splice(i, 1);
-					x[0].remove();
-				}
-
-			}
-		}
-
-	},
-	compDates : function(e, model) {
+	compDates : function(e, model){
 		var timeCheck = {
 
 			day : new Date((this.collection.get(e.model.id)).get('startTime')).getDay(),
@@ -312,6 +249,7 @@ var EditAppointmentsView = AppointmentsView.extend({
 		}
 		return (new Date(model.get('startTime')).getMonth() == timeCheck.month && new Date(model.get('startTime')).getDay() == timeCheck.day)
 	}
+	
 })
 var Router = Backbone.Router.extend({
 	routes : {
@@ -351,24 +289,18 @@ var Router = Backbone.Router.extend({
 		this.view = view;
 	}
 });
-
 $(document).ready(function() {
-	jQuery.webshims.setOptions('forms forms-ext', {
-		replaceUI : false,
-		waitReady : false
-	});
 
 	var router = new Router();
 	Backbone.history.start({
 
 	});
-
 });
 /*
  for(var i=0; i<10; i++){jQuery.post( '/api/appointments', {
  'title': 'appointment' +i,
- 'startTime': new Date( 2013, i, i+1, (i+1) * 2).getTime(),
- 'endTime': new Date( 2013, i, i+1,(i+2) *2 ).getTime()
+ 'startTime': new Date( 20013, 6, 45).getTime(),
+ 'endTime': new Date( 20013, 7, 15 ).getTime()
  }, function(data, textStatus, jqXHR) {
  console.log( 'Post response:' );
  console.dir( data );

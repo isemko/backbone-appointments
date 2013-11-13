@@ -6,6 +6,13 @@
 		<meta charset="UTF-8"/>
 		<title>View Test</title>
 		<link rel="stylesheet" href="assets/css/style.css" />
+		<script src="assets/js/lib/jquery-1.10.2.min.js"></script>
+		<script src="assets/js/lib/modernizr-custom.js"></script>
+		<script src="assets/js/lib/polyfiller.js"></script>
+		<script>
+
+
+		</script>
 	</head>
 	<body>
 		<div id="content">
@@ -58,46 +65,26 @@
 			</div>
 			<div class='clear'></div>
 		</script>
-		<!--
-			
-				/*
-<form id="addBook" action="#">
-        <div>
-            <label for="coverImage">CoverImage: </label><input id="coverImage" type="file" />
-            <label for="title">Title: </label><input id="title" type="text" />
-            <label for="author">Author: </label><input id="author" type="text" />
-            <label for="releaseDate">Release date: </label><input id="releaseDate" type="text" />
-            <label for="keywords">Keywords: </label><input id="keywords" type="text" />
-            <button id="add">Add</button>
-        </div>
-    </form> 
-	 * 
-	 * 
-	 */
-			
-			
-			
-		-->
+
 		<script type="text/template" id="edit-app" >
 			<form id="editAppointment" action="#">
-			
- 
-         <li> <label for="title">Title: </label><input id="title" type="text" /></li>  
-             <li> <label for="startTime">Start Time: </label><input id="startTime" type="text" value="<%= title %>" /></li>
-            <li>  <label for="endTime">Ent Time: </label><input id="endTime" type="text" value="<%= endTime %>" /></li>
-          <li>    <label for="appointmentName">Appointment Name: </label><input id="appointmentName" type="text" value="<%= appointmentName %>"  /></li>
-                <li>    <label for="description">Description: </label><input id="description" type="text" value="<%= description %>" /></li>
-            <li>  
-            	<button id="add">Add</button></li>
 
-			
+			<li><input id="title" type="text" value="<%= title %>"/></li>
+			<li> <input id="startTime-fake" type="text" value="<%= $.format.date( new Date( startTime), 'hh:mm a' ) %>" />
+			<input id="entry-day-time" name="entry-day-time" type="datetime-local"/>
+			</li>
+
+			<li> <input id="endTime-fake" type="text" value="<%= $.format.date( new Date( endTime), 'hh:mm a' ) %>" /></li>
+
+			<li>
+			<button id="update">Add</button></li>
+
 			</form>
 		</script>
-		<script src="assets/js/lib/jquery-1.10.2.min.js"></script>
 		<script src="assets/js/lib/jquery.dateFormat-1.0.js"></script>
 		<script src="assets/js/lib/underscore.js"></script>
 		<script src="assets/js/lib/backbone.js"></script>
-
 		<script src="assets/js/app.js"></script>
+
 	</body>
 </html>
