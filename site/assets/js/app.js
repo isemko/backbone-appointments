@@ -70,7 +70,7 @@ var AppointmentDetailView = AppointmentView.extend({
 				formData[el.id] = $(el).val();
 			}
 		});
-		/*formData['startTime'] = new Date(parseInt(startDate[0]), parseInt(startDate[1]), parseInt(startDate[2]), parseInt(startDate[3]), parseInt(startDate[4]));*/
+		//formData['startTime'] = new Date(parseInt(startDate[0]), parseInt(startDate[1]), parseInt(startDate[2]), parseInt(startDate[3]), parseInt(startDate[4]));
 		this.model.save(formData);
 		this.$el.updatePolyfill();
 

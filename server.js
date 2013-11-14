@@ -85,14 +85,15 @@ app.put('/api/appointments/:id', function(request, response) {
 	console.log('Updating appointment ' + request.body.title);
 	return AppointmentModel.findById(request.params.id, function(err, appointment) {
 
-		title = request.body.title, 
-		startTime = request.body.startTime, 
-		endTime = request.body.endTime, 
-		appointmentName = request.body.appointmentName,
-		 description = request.body.description
+		appointment.title = request.body.title, 
+		appointment.startTime = request.body.startTime, 
+		appointment.endTime = request.body.endTime, 
+		appointment.appointmentName = request.body.appointmentName,
+		 appointment.description = request.body.description;
+		 console.log(appointment)
 		return appointment.save(function(err) {
 			if (!err) {
-				console.log('appointment updated');
+				//console.log('appointment updated asdass');
 			} else {
 				console.log(err);
 			}
