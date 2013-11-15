@@ -30,8 +30,8 @@
 			</div>
 			</div>
 			<div class="fr"><div class='outer right'>
-			<div class='app-link'><a class='go' href='/appointments/<%= _id %>'> </a></div>
-			<div class='date'><%= $.format.date( new Date( startTime), 'hh:mm a' ) %></div>
+			<!--<div class='app-link'><a class='go' href='/appointments/<%= _id %>'> </a></div>-->
+			<div class='date'><%= $.format.date( new Date( startTime), 'h:mm a' ) %></div>
 			</div>
 			</div>
 			<div class='clear'></div>
@@ -46,7 +46,7 @@
 			<div class="fr"><div class='outer right'>
 
 			<div class='app-link'><a class='go' href='#appointments/<%= _id %>'> </a></div>
-			<div class='date'><%= $.format.date( new Date( startTime), 'hh:mm a' ) %></div>
+			<div class='date'><%= $.format.date( new Date( startTime), 'h:mm a' ) %></div>
 
 			</div>
 			<div class="fr hidden-delete">delete</div>
@@ -70,12 +70,13 @@
 			<form id="editAppointment" action="#">
 
 			<li><input id="title" type="text" value="<%= title %>"/></li>
-			<li> <input id="startTime-fake" type="text" value="<%= $.format.date( new Date( startTime), 'hh:mm a' ) %>" />
+			<li> <input id="startTime-fake" type="text" value="<%= $.format.date( new Date( startTime), 'h:mm a' ) %>" />
 			<input id="entry-day-time" name="entry-day-time" type="datetime-local"/>
 			</li>
 
-			<li> <input id="endTime-fake" type="text" value="<%= $.format.date( new Date( endTime), 'hh:mm a' ) %>" /></li>
-
+			<li> <input id="endTime-fake" type="text" value="<%= $.format.date( new Date( endTime), 'h:mm a' ) %>" />
+			<input id="entry-day-end-time" name="entry-day-end-time" type="datetime-local"/>
+</li>
 			<li>
 			<button id="update">Add</button></li>
 

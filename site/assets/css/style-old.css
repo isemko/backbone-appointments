@@ -79,7 +79,7 @@ a.go {
 ul#appList li {
 	font-family: "Proxima Nova Light", Helvetica, sans-serif;
 	list-style-type: none;
-	padding: 20px 0px 30px 10px;
+	padding: 20px 0px 20px 10px;
 	border-bottom: 1px solid #dddddd;
 	background-color: #fafafa;
 
@@ -119,7 +119,6 @@ font-size: 1em;
 nav ul li:first-child{text-align:left;width:18%;}
 nav ul li:last-child{text-align:right;width:18%;}
 
-
 nav ul li a {
 	color: #fff;
 }
@@ -128,11 +127,11 @@ nav ul li.nav-last {
 	font-size: 32px;
 	line-height: 25px
 }
-#appList li .fl {
+#appList li.edit-list-item .fl {
 
 	float: left;
 }
-#appList li .fr {
+#appList li.edit-list-item .fr {
 
 	float: right;
 
@@ -140,12 +139,16 @@ margin-top:-20px;
 }
 #appList li .fr.hidden-delete-show{height:32px;margin-top:-1px}
 #appList li div {
-	float: left;
+
 	margin: 0px 0px;;
-	
+	line-height: 25px;
+}
+#appList li.edit-list-item div{
+	float:left
 }
 #appList li .title {
-margin: 0 0 0 10px
+	margin-top: -5px;
+margin-left:10px
 }
 #appList li .outer .app-link, #appList li .outer .date, #appList li .outer .r, #appList li .outer .hidden-delete {
 	
@@ -184,16 +187,19 @@ animation:hideleft .5s 1;}
 }
 
 
+#appList li {
+	padding: 0px 0px;
+	height: 10px;
+}
 #appList li div.del {
 
 	padding: 12px 0px 5px 0px;
-	width: 17px;height 17px;
+	width: 17px;
 	background: url('../img/del.png');
 	cursor: pointer;
 }
 .app-link {
 	display:block;
-padding: 15px 10px
 }
 #appList li .outer {
 	display: table;
@@ -211,4 +217,4 @@ padding: 15px 10px
 padding:20px 10px
 }
 .clear{clear:both;height:0px}
-input{border:0; background:inherit;}
+input{border:0; background:inherit;width:200px}

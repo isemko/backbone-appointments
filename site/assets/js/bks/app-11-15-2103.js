@@ -6,7 +6,11 @@ $.expr.cacheLength = 1;
 		});
 var Model = Backbone.Model.extend({
 	idAttribute : '_id',
-	urlRoot : '/api/appointments'
+	urlRoot : '/api/appointments',
+	defaults : {
+		id : '',
+		name : ''
+	}
 
 });
 var Collection = Backbone.Collection.extend({
@@ -68,13 +72,12 @@ this.$el.updatePolyfill();
 				endDate = $(el).val().split(/[-T:]+/);
 			} else if (el.id == 'entry-day-time') {
 				formData['startTime'] = $(el).val();
-				startDate = $(el).val().split(/[-T:]+/);
+				//startDate = $(el).val().split(/[-T:]+/);
 			} else {
 				formData[el.id] = $(el).val();
 			}
 		});
-		formData['startTime'] = new Date(parseInt(startDate[0]), parseInt(startDate[1]), parseInt(startDate[2]), parseInt(startDate[3]), parseInt(startDate[4])).getTime();
-		formData['endTime'] = new Date(parseInt(endDate[0]), parseInt(endDate[1]), parseInt(endDate[2]), parseInt(endDate[3]), parseInt(endDate[4])).getTime();
+		//formData['startTime'] = new Date(parseInt(startDate[0]), parseInt(startDate[1]), parseInt(startDate[2]), parseInt(startDate[3]), parseInt(startDate[4]));
 		this.model.save(formData);
 		this.$el.updatePolyfill();
 
@@ -83,7 +86,7 @@ this.$el.updatePolyfill();
 		
 		$('#content').removeClass('editApp');
 		this.$el.empty();
-		this.$el.remove();
+		this.$el.remove();//added for webshims
 		this.remove();
 		this.el = null;
 		this.$el = null;
@@ -129,6 +132,7 @@ var HeaderView = Backbone.View.extend({
 
 		this.$el.attr("class", options.classId + ' ' + this.$el.attr('class'));
 		this.model = options;
+		//this.listenTo(this.model, 'change', this.render);
 		this.id = this.model.id;
 		this.render();
 	},
@@ -200,6 +204,7 @@ var AppointmentsView = Backbone.View.extend({
 	},
 
 	close : function() {
+		//$('.hidden-delete').unbind();
 		while (this.subViews.length) {
 			var x = this.subViews.pop();
 			x.$el.empty();

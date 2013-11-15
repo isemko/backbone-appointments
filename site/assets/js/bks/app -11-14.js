@@ -1,12 +1,17 @@
 var vent = _.extend({}, Backbone.Events);
 $.expr.cacheLength = 1;
-		jQuery.webshims.setOptions('forms forms-ext', {
-			replaceUI : false,
-			waitReady : false
-		});
+webshims.setOptions({
+	waitReady : false,
+	//basePath : "libs/shims",
+	replaceUI : false
+});
 var Model = Backbone.Model.extend({
 	idAttribute : '_id',
-	urlRoot : '/api/appointments'
+	urlRoot : '/api/appointments',
+	defaults : {
+		id : '',
+		name : ''
+	}
 
 });
 var Collection = Backbone.Collection.extend({
@@ -16,13 +21,13 @@ var Collection = Backbone.Collection.extend({
 
 var AppointmentView = Backbone.View.extend({
 	tagName : "li",
+	className : 'edit-list-item',
 	template : _.template($('#app-template').html()),
 	events : {
 	},
 	initialize : function(e) {
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
-	
 		this.render();
 	},
 	render : function() {
@@ -40,22 +45,22 @@ var AppointmentDetailView = AppointmentView.extend({
 	},
 	initialize : function() {
 
-
 		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model, 'destroy', this.remove);
 		$("#main-data").html(this.el);
 		$('#content').addClass('editApp');
-		webshims.polyfill('forms forms-ext');
-		
 		this.render();
-		
+	
+			//preload after onload
+			webshims.polyfill('forms forms-ext');
+	
+
 		this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>" + "<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>" + "</nav></header>");
 
 	},
 	render : function() {
 
 		this.$el.html(this.template(this.model.toJSON()));
-this.$el.updatePolyfill();
+		this.$el.updatePolyfill();
 		return this;
 
 	},
@@ -67,23 +72,21 @@ this.$el.updatePolyfill();
 			if (el.id == 'entry-day-end-time') {
 				endDate = $(el).val().split(/[-T:]+/);
 			} else if (el.id == 'entry-day-time') {
-				formData['startTime'] = $(el).val();
+				//formData['startTime'] = $(el).val();
 				startDate = $(el).val().split(/[-T:]+/);
 			} else {
 				formData[el.id] = $(el).val();
 			}
 		});
-		formData['startTime'] = new Date(parseInt(startDate[0]), parseInt(startDate[1]), parseInt(startDate[2]), parseInt(startDate[3]), parseInt(startDate[4])).getTime();
-		formData['endTime'] = new Date(parseInt(endDate[0]), parseInt(endDate[1]), parseInt(endDate[2]), parseInt(endDate[3]), parseInt(endDate[4])).getTime();
+		formData['startTime'] = new Date(parseInt(startDate[0]), parseInt(startDate[1]), parseInt(startDate[2]), parseInt(startDate[3]), parseInt(startDate[4]));
 		this.model.save(formData);
 		this.$el.updatePolyfill();
 
 	},
 	close : function() {
-		
 		$('#content').removeClass('editApp');
+
 		this.$el.empty();
-		this.$el.remove();
 		this.remove();
 		this.el = null;
 		this.$el = null;
@@ -93,11 +96,11 @@ this.$el.updatePolyfill();
 
 var EditAppointmentView = AppointmentView.extend({
 	tagName : 'li',
-	className: 'edit-list-item',
+
 	template : _.template($('#edit-template').html()),
 	initialize : function(options) {
 
-		this.$el.attr("class", options.classId+' '+this.className);
+		this.$el.attr("class", options.classId + ' ' + this.className);
 
 		this.render();
 
@@ -129,6 +132,7 @@ var HeaderView = Backbone.View.extend({
 
 		this.$el.attr("class", options.classId + ' ' + this.$el.attr('class'));
 		this.model = options;
+		//this.listenTo(this.model, 'change', this.render);
 		this.id = this.model.id;
 		this.render();
 	},
@@ -200,6 +204,7 @@ var AppointmentsView = Backbone.View.extend({
 	},
 
 	close : function() {
+		//$('.hidden-delete').unbind();
 		while (this.subViews.length) {
 			var x = this.subViews.pop();
 			x.$el.empty();
@@ -280,13 +285,13 @@ var EditAppointmentsView = AppointmentsView.extend({
 	},
 	checkHeader : function(e) {
 		//find total number of the day's class
-		$listCount = $('.' + $(e.$el[0]).attr('class').split(' ')[0]).length - 1;
+		$listCount = $('.' + $(e.$el[0]).attr('class')).length - 1;
 		// if only one, it is the heeader
 		if ($listCount == 1) {
 			//search views remove the header from subviews
 			for (var i = this.subViews.length - 1; i >= 0; i--) {
 				var check = (this.subViews[i].id ? this.subViews[i].id : this.subViews[i].model.id )
-				if (check == $(e.$el[0]).attr('class').split(' ')[0]) {
+				if (check == $(e.$el[0]).attr('class')) {
 					var x = this.subViews.splice(i, 1);
 					x[0].remove();
 				}
@@ -356,6 +361,7 @@ var Router = Backbone.Router.extend({
 		this.view = view;
 	}
 });
+jQuery.webshims.debug = false;
 
 $(document).ready(function() {
 
