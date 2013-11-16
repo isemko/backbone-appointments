@@ -106,7 +106,6 @@ var AppointmentDetailView = AppointmentView.extend({
 				startDate = $(el).val().split(/[-T:]+/);
 			} else {
 				formData[el.id] = $(el).val().trim();
-				console.log()
 			}
 		});
 
@@ -152,14 +151,15 @@ var AppointmentAddView = AppointmentDetailView.extend({
 	render : function() {
 		this.model = {
 			today : new Date()
-		}
+		};
 		this.$el.html(this.template(this.model));
 		this.$el.updatePolyfill();
-		this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li>New Appointment</li>" + "<li class='edit-save' ><a class='pr' href='#save'>Save</a></li></ul>" + "</nav></header>");
+		this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#home'>Cancel</a></li><li>New Appointment</li>" + "<li class='edit-save' ><a class='pr' href='#save'>Save</a></li></ul>" + "</nav></header>");
 		return this;
 
 	},
 	updateAppointment : function(e) {
+		
 		e.preventDefault();
 		var formData = {};
 		var startDate = endDate = '';
@@ -179,7 +179,8 @@ var AppointmentAddView = AppointmentDetailView.extend({
 		if (this.valid(formData)) {
 			var app = new Model(formData)
 			app.save(formData).complete(function() {
-				router.navigate('home', true)
+				console.log('going home')
+				router.navigate('home', true);
 
 			});
 		}
