@@ -222,8 +222,8 @@ var AppointmentsView = Backbone.View.extend({
 	close : function() {
 		while (this.subViews.length) {
 			var x = this.subViews.pop();
-			//x.$el.empty();
-			//x.$el.remove();
+			x.$el.empty();
+			x.$el.remove();
 			x.remove();
 
 		}

@@ -216,5 +216,5 @@ padding:20px 10px
 input{border:0; background:inherit;}
 .start-cover{cursor: pointer}
 .start-input{display:none;}
-input{width:200px;}
-.editApp ul#appList li{padding-bottom:10px;}
+input{width:200px;height:15px;}
+.editApp ul#appList li{padding-bottom:10px;height:20px;}
