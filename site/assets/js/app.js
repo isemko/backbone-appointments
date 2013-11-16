@@ -59,11 +59,10 @@ var AppointmentDetailView = AppointmentView.extend({
 		
 		this.render();
 		
-		this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>" + "<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>" + "</nav></header>");
+		this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li><a href='#home'>My Appointments</a></li>" + "<li  ><a href='#/home' class='edit-save'>Save</a></li></ul>" + "</nav></header>");
 
 	},
 	render : function() {
-//need to format the date
 		this.$el.html(this.template(this.model.toJSON()));
 		this.$el.updatePolyfill();
 		return this;
