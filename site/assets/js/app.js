@@ -126,7 +126,7 @@ var AppointmentDetailView = AppointmentView.extend({
 		e.preventDefault();
 		var formData = {};
 		var startDate = endDate = '';
-		$('#appList li input').each(function(i, el) {
+		$('#appList li input,#appList li textarea').each(function(i, el) {
 			if (el.id == 'entry-day-end-time') {
 				endDate = $(el).val().split(/[-T:]+/);
 			} else if (el.id == 'entry-day-time') {
@@ -134,7 +134,7 @@ var AppointmentDetailView = AppointmentView.extend({
 				//console.log('at start')
 				startDate = $(el).val().split(/[-T:]+/);
 			} else {
-				formData[el.id] = $(el).val();
+				formData[el.id] = $(el).val().trim();console.log()
 			}
 		});
 
