@@ -148,9 +148,12 @@ var AppointmentDetailView = AppointmentView.extend({
 	}
 });
 var AppointmentAddView = AppointmentDetailView.extend({
-	template : $('#add-app').html(),
+	template : _.template($('#add-app').html()),
 	render : function() {
-		this.$el.html(this.template);
+		this.model = {
+			today : new Date()
+		}
+		this.$el.html(this.template(this.model));
 		this.$el.updatePolyfill();
 		this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li>New Appointment</li>" + "<li class='edit-save' ><a class='pr' href='#save'>Save</a></li></ul>" + "</nav></header>");
 		return this;
