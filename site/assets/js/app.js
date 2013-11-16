@@ -1,10 +1,10 @@
 var vent = _.extend({}, Backbone.Events);
 $.expr.cacheLength = 1;
-		jQuery.webshims.setOptions('forms forms-ext', {
-			replaceUI : false,
-			waitReady : false,
-			replaceValidationUI : true
-		});
+jQuery.webshims.setOptions('forms forms-ext', {
+	replaceUI : false,
+	waitReady : false,
+	replaceValidationUI : true
+});
 var Model = Backbone.Model.extend({
 	idAttribute : '_id',
 	urlRoot : '/api/appointments'
@@ -23,7 +23,7 @@ var AppointmentView = Backbone.View.extend({
 	initialize : function(e) {
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
-	
+
 		this.render();
 	},
 	render : function() {
@@ -37,7 +37,9 @@ var HeaderView = Backbone.View.extend({
 	tagName : 'li',
 	className : 'date-head',
 	template : _.template("<%=  $.format.date(new Date(temp_date), 'ddd, MMMM d, yyyy').toUpperCase() %> "),
-	events: {'click li': 'triggerSave'},
+	events : {
+		'click li' : 'triggerSave'
+	},
 	initialize : function(options) {
 
 		this.$el.attr("class", options.classId + ' ' + this.$el.attr('class'));
@@ -51,43 +53,16 @@ var HeaderView = Backbone.View.extend({
 
 		return this;
 	},
-	triggerSave: function(){
+	triggerSave : function() {
 		console.log('clicked')
 	}
 });
 /*
- * 
-this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li><a href='#home'>My Appointments</a></li>" + "<li class='edit-save' >Save</li></ul>" + "</nav></header>"); 
- * 
+ *
+ this.$el.before("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li><a href='#home'>My Appointments</a></li>" + "<li class='edit-save' >Save</li></ul>" + "</nav></header>");
+ *
  */
-var HeaderViewNav = Backbone.View.extend({
-	el: '#header-cont',
-	events: {'click .edit-save': 'triggerSave'},
-	initialize : function(options) {
-	   _.bindAll(this, 'triggerSave');
 
-		console.log('headerviewnav');
-		
-		this.render();
-
-		
-	},
-	render : function() {
-
-       // return this;
-       console.log('rendering')
-
-	 this.$el.append("<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li><a href='#home'>My Appointments</a></li>" + "<li class='edit-save' >Save</li></nav>");
-		//this.delegateEvents();
-		
-		return this;
-	
-	},
-	triggerSave: function(){
-		console.log('click')
-		vent.trigger('saveapp',this);
-	}
-});
 var AppointmentDetailView = AppointmentView.extend({
 	tagName : "ul",
 	id : "appList",
@@ -95,32 +70,28 @@ var AppointmentDetailView = AppointmentView.extend({
 	events : {
 		'click .edit-save' : 'updateAppointment',
 		'click .start-cover' : 'toggleInput',
-	
+
 	},
 	initialize : function() {
-		vent.on('editsave', this.updateAppointment, this);
-		
+
 		//this.listenTo(this.model, 'change', this.render);
 		$("#main-data").html(this.el);
 		$('#content').addClass('editApp');
-		
-		
+
 		this.render();
-		
-	
-		
+
 	},
 	render : function() {
 		this.$el.html(this.template(this.model.toJSON()));
 		this.$el.updatePolyfill();
-			this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li><a href='#home'>My Appointments</a></li>" + "<li class='edit-save' ><a class='pr' href='#save'>Save</a></li></ul>" + "</nav></header>");
+		this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li><a href='#home'>My Appointments</a></li>" + "<li class='edit-save' ><a class='pr' href='#save'>Save</a></li></ul>" + "</nav></header>");
 		return this;
 
 	},
-	toggleInput :function(e) {
+	toggleInput : function(e) {
 		$(e.currentTarget).hide();
 		$(e.currentTarget).next('.start-input').show();
-		
+
 	},
 	updateAppointment : function(e) {
 		e.preventDefault();
@@ -134,34 +105,32 @@ var AppointmentDetailView = AppointmentView.extend({
 				//console.log('at start')
 				startDate = $(el).val().split(/[-T:]+/);
 			} else {
-				formData[el.id] = $(el).val().trim();console.log()
+				formData[el.id] = $(el).val().trim();
+				console.log()
 			}
 		});
 
-		formData['startTime'] = new Date(startDate[0], startDate[1]-1, startDate[2], startDate[3], startDate[4]);
-		formData['endTime'] = new Date(endDate[0], endDate[1]-1, endDate[2], endDate[3], endDate[4]);
+		formData['startTime'] = new Date(startDate[0], startDate[1] - 1, startDate[2], startDate[3], startDate[4]);
+		formData['endTime'] = new Date(endDate[0], endDate[1] - 1, endDate[2], endDate[3], endDate[4]);
 		var self = this;
-		if (this.valid(formData)){
-			this.model.save(formData).complete(function(){
+		if (this.valid(formData)) {
+			this.model.save(formData).complete(function() {
 				router.navigate('edit', true)
-			
-			
-			});
-			}
 
+			});
+		}
 
 	},
-	valid: function(f){
-	
-		for(var v in f){
-			if(f[v] == ''){
+	valid : function(f) {
+
+		for (var v in f) {
+			if (f[v] == '') {
 				alert('please enter a value');
 				return false;
 			}
-			
-			
+
 		}
-		if(new Date(f['startTime']) > new Date(f['endTime'])){
+		if (new Date(f['startTime']) > new Date(f['endTime'])) {
 			alert('end date must come after start date');
 			return false
 		}
@@ -169,24 +138,58 @@ var AppointmentDetailView = AppointmentView.extend({
 		return true;
 	},
 	close : function() {
-		
+
 		$('#content').removeClass('editApp');
 		this.$el.empty();
 		this.remove();
 		this.el = null;
 		this.$el = null;
-			
 
 	}
-})
+});
+var AppointmentAddView = AppointmentDetailView.extend({
+	template : $('#add-app').html(),
+	render : function() {
+		this.$el.html(this.template);
+		this.$el.updatePolyfill();
+		this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li>New Appointment</li>" + "<li class='edit-save' ><a class='pr' href='#save'>Save</a></li></ul>" + "</nav></header>");
+		return this;
 
+	},
+	updateAppointment : function(e) {
+		e.preventDefault();
+		var formData = {};
+		var startDate = endDate = '';
+		$('#appList li input,#appList li textarea').each(function(i, el) {
+			if (el.id == 'entry-day-end-time') {
+				endDate = $(el).val().split(/[-T:]+/);
+			} else if (el.id == 'entry-day-time') {
+				startDate = $(el).val().split(/[-T:]+/);
+			} else {
+				formData[el.id] = $(el).val().trim();
+			}
+		});
+
+		formData['startTime'] = new Date(startDate[0], startDate[1] - 1, startDate[2], startDate[3], startDate[4]);
+		formData['endTime'] = new Date(endDate[0], endDate[1] - 1, endDate[2], endDate[3], endDate[4]);
+		var self = this;
+		if (this.valid(formData)) {
+			var app = new Model(formData)
+			app.save(formData).complete(function() {
+				router.navigate('home', true)
+
+			});
+		}
+
+	},
+})
 var EditAppointmentView = AppointmentView.extend({
 	tagName : 'li',
-	className: 'edit-list-item',
+	className : 'edit-list-item',
 	template : _.template($('#edit-template').html()),
 	initialize : function(options) {
 
-		this.$el.attr("class", options.classId+' '+this.className);
+		this.$el.attr("class", options.classId + ' ' + this.className);
 
 		this.render();
 
@@ -266,7 +269,7 @@ var AppointmentsView = Backbone.View.extend({
 
 		})
 
-		this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>" + "<li  class='nav-last'><div class='add-main-inner'><a href='#/home' class='add-main'>+</a></div></li></ul>" + "</nav></header>");
+		this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#edit'>Edit</a></li><li><a href='#home'>My Appointments</a></li>" + "<li  class='nav-last'><div class='add-main-inner'><a href='#add' class='add-main'>+</a></div></li></ul>" + "</nav></header>");
 
 	},
 
@@ -320,8 +323,6 @@ var EditAppointmentsView = AppointmentsView.extend({
 		self.subViews.push(hView);
 
 		this.collection.forEach(function(model) {
-
-			//need new way of referencing
 			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
 				temp_model = model;
 				temp_date = temp_model.get('startTime');
@@ -386,13 +387,14 @@ var EditAppointmentsView = AppointmentsView.extend({
 		return (new Date(model.get('startTime')).getMonth() == timeCheck.month && new Date(model.get('startTime')).getDay() == timeCheck.day)
 	}
 })
-var Router =  Backbone.Router.extend({
+var Router = Backbone.Router.extend({
 	routes : {
 		"" : "Appointments",
 		"home" : "Appointments",
 		"edit" : "editAppointments",
 		"appointments/:id" : "editAppointment",
-		"save": "triggerSave"
+		"save" : "triggerSave",
+		"add" : "addAppointment"
 	},
 	initialize : function(options) {
 
@@ -403,7 +405,7 @@ var Router =  Backbone.Router.extend({
 	},
 	editAppointments : function() {
 		this.loadView(new EditAppointmentsView());
-		
+
 	},
 	editAppointment : function(id) {
 
@@ -421,21 +423,19 @@ var Router =  Backbone.Router.extend({
 		//this.loadView(new HeaderViewNav({el: '#header-cont'}));
 
 	},
-	triggerSave : function(e){
-		this.preventDefault();
-		this.navigate('edit', true)
-		vent.trigger('editsave', this);
-		
-	},
+	addAppointment : function(){
+		this.loadView(new AppointmentAddView());
+	}
+	,
 	loadView : function(view) {
 		this.view && (this.view.close ? this.view.close() : this.view.remove());
 		this.view = view;
 	}
 });
-var router ='';
+var router = '';
 $(document).ready(function() {
-webshims.polyfill('forms forms-ext');
-	 router = new Router();
+	webshims.polyfill('forms forms-ext');
+	router = new Router();
 	Backbone.history.start({
 
 	});
