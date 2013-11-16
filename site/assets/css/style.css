@@ -49,22 +49,20 @@ body {
 #content {
 
 	position: absolute;
-    overflow-x:hidden;
-
+	overflow-x: hidden;
 	width: 100%;
 	height: 100%;
 }
-#content.editApp{
-	  overflow-x:visible;
-	
+#content.editApp {
+	overflow-x: visible;
 }
-@media (min-width: 768px){
-	#content{
+@media (min-width: 768px) {
+	#content {
 		position: relative;
-		width:768px;
+		width: 768px;
 		margin: 0 auto;
 	}
-	
+
 }
 a {
 	text-decoration: none;
@@ -74,7 +72,6 @@ a.go {
 	background: url('../img/go.png');
 	height: 16px;
 	width: 10px;
-
 }
 ul#appList li {
 	font-family: "Proxima Nova Light", Helvetica, sans-serif;
@@ -82,16 +79,14 @@ ul#appList li {
 	padding: 20px 0px 0px 10px;
 	border-bottom: 1px solid #dddddd;
 	background-color: #fafafa;
-
 }
 ul#appList li.date-head {
-	font-size:10px;
+	font-size: 10px;
 	list-style-type: none;
 	padding: 10px 10px;
 	border-bottom: 1px solid #dddddd;
 	background-color: #5a5651;
-	color:#fff;
-
+	color: #fff;
 }
 nav {
 	margin: 0;
@@ -105,67 +100,80 @@ nav {
 #appList li .fr {
 
 	float: right;
-
-margin-top:-20px;
+	margin-top: -20px;
 }
-#appList li .fr.hidden-delete-show{height:33px;margin-top:-1px;margin-bottom:-1px;}
+#appList li .fr.hidden-delete-show {
+	height: 33px;
+	margin-top: -1px;
+	margin-bottom: -1px;
+}
 #appList li div {
-	
+
 	margin: 0px 0px;;
-	
 }
 #appList li div.title {
-float:left;
-margin: 0 0 0 10px
+	float: left;
+	margin: 0 0 0 10px
 }
 #appList li .outer .app-link, #appList li .outer .date, #appList li .outer .r, #appList li .outer .hidden-delete {
-	
+
 	float: right;
 }
-#appList li .outer{float:left;}
-.hidden-delete{display:none;}
+#appList li .outer {
+	float: left;
+}
+.hidden-delete {
+	display: none;
+}
 
-.hidden-delete-show{width:100px; background:#e83c3c; color:#fff; -webkit-animation:moveleft .2s 1; 
-animation:moveleft .5s 1;   padding:18px 10px 2px 10px;;}
+.hidden-delete-show {
+	width: 100px;
+	background: #e83c3c;
+	color: #fff;
+	-webkit-animation: moveleft .2s 1;
+	animation: moveleft .5s 1;
+	padding: 18px 10px 2px 10px;;
+}
 
- .slide-left{-webkit-animation: hideleft .2s 1;
-animation:hideleft .5s 1;}
- #appList li div.fl.slide-left {
-	margin-left:-100px;
+.slide-left {
+	-webkit-animation: hideleft .2s 1;
+	animation: hideleft .5s 1;
+}
+#appList li div.fl.slide-left {
+	margin-left: -100px;
 }
 
 @keyframes moveleft{
-  0%{width:0px},
-  50%{width:50%},
-  100%{width:100%}
+0%{width:0px},
+50%{width:50%},
+100%{width:100%}
 }
 @keyframes hideleft{
-  0%{margin-left:0px},
-    50%{margin-left:-50px},
-  100%{margin-left:-100px}
+0%{margin-left:0px},
+50%{margin-left:-50px},
+100%{margin-left:-100px}
 }
 @-webkit-keyframes moveleft{
-  0%{width:0px},
-  50%{width:50%},
-  100%{width:100%}
+0%{width:0px},
+50%{width:50%},
+100%{width:100%}
 }
 @-webkit-keyframes hideleft{
-  0%{margin-left:0px},
-      50%{margin-left:-50px},
-  100%{margin-left:-100px}
+0%{margin-left:0px},
+50%{margin-left:-50px},
+100%{margin-left:-100px}
 }
 
-
 #appList li div.del {
-float:left;
+	float: left;
 	padding: 12px 0px 5px 0px;
 	width: 17px;height 17px;
 	background: url('../img/del.png');
 	cursor: pointer;
 }
 .app-link {
-	display:block;
-padding: 15px 10px
+	display: block;
+	padding: 15px 10px
 }
 #appList li .outer {
 	display: table;
@@ -176,18 +184,33 @@ padding: 15px 10px
 
 #appList li .date {
 	font-size: 13px;
-
 	color: #dddddd;
 	padding: 0px 10px;
 	margin: -2px 0px 0px 0px;
-padding:20px 10px
+	padding: 20px 10px
 }
-.clear{clear:both;height:0px}
-input{border:0; background:inherit;width:225px;height:20px; font: 1em Proxima Nova Light }
-.start-cover{cursor: pointer}
-.start-input{display:none;}
+.clear {
+	clear: both;
+	height: 0px
+}
+input {
+	border: 0;
+	background: inherit;
+	width: 225px;
+	height: 20px;
+	font: 1em Proxima Nova Light
+}
+.start-cover {
+	cursor: pointer
+}
+.start-input {
+	/*display: none;*/
+}
 
-.editApp ul#appList li{padding-bottom:10px;height:20px;}
+.editApp ul#appList li {
+	padding-bottom: 10px;
+	height: 20px;
+}
 #appList
 #main-nav {
 	margin: 0 auto;
@@ -200,18 +223,31 @@ input{border:0; background:inherit;width:225px;height:20px; font: 1em Proxima No
 }
 #appList nav ul li {
 
-width:58%;
-	float:left;
+	width: 58%;
+	float: left;
 	cursor: pointer;
-	padding:.25em 0;
-font-size: 1em;
-background-color:transparent;
-border:0;
+	padding: .25em 0;
+	font-size: 1em;
+	background-color: transparent;
+	border: 0;
 }
-#appList nav ul li:first-child{text-align:left;width:18%;padding:.25em 0 0 2%; text-shadow: 1px  1px 1px #444;}
-#appList nav ul li:last-child{text-align:right;width:18%;padding:.25em 0 0 2% ;text-shadow: 1px  1px 1px #444;}
-#appList nav ul li.nav-last:last-child{text-align:right;width:18%;padding:0 0 0 2%}
-
+#appList nav ul li:first-child {
+	text-align: left;
+	width: 18%;
+	padding: .25em 0 0 2%;
+	text-shadow: 1px 1px 1px #444;
+}
+#appList nav ul li:last-child {
+	text-align: right;
+	width: 18%;
+	padding: .25em 0 0 2%;
+	text-shadow: 1px 1px 1px #444;
+}
+#appList nav ul li.nav-last:last-child {
+	text-align: right;
+	width: 18%;
+	padding: 0 0 0 2%
+}
 
 #appList nav ul li a {
 	color: #fff;

@@ -143,12 +143,12 @@ var AppointmentDetailView = AppointmentView.extend({
 		var self = this;
 		if (this.valid(formData)){
 			this.model.save(formData).complete(function(){
-				//self.render();
 				router.navigate('edit', true)
+			
 			
 			});
 			}
-		//this.$el.updatePolyfill();
+
 
 	},
 	valid: function(f){
@@ -175,6 +175,7 @@ var AppointmentDetailView = AppointmentView.extend({
 		this.remove();
 		this.el = null;
 		this.$el = null;
+			
 
 	}
 })
