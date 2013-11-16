@@ -214,3 +214,6 @@ padding:20px 10px
 }
 .clear{clear:both;height:0px}
 input{border:0; background:inherit;}
+.start-cover{cursor: pointer}
+.start-input{display:none;}
+input{width:200px;}

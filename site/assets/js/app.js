@@ -36,13 +36,13 @@ var AppointmentDetailView = AppointmentView.extend({
 	id : "appList",
 	template : _.template($('#edit-app').html()),
 	events : {
-		'click #update' : 'updateAppointment'
+		'click #update' : 'updateAppointment',
+		'click .start-cover' : 'toggleInput'
 	},
 	initialize : function() {
 
 
 		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model, 'destroy', this.remove);
 		$("#main-data").html(this.el);
 		$('#content').addClass('editApp');
 		
@@ -53,17 +53,22 @@ var AppointmentDetailView = AppointmentView.extend({
 
 	},
 	render : function() {
-
+//need to format the date
 		this.$el.html(this.template(this.model.toJSON()));
-this.$el.updatePolyfill();
+		this.$el.updatePolyfill();
 		return this;
 
+	},
+	toggleInput :function(e) {
+		$(e.currentTarget).hide();
+		$(e.currentTarget).next('.start-input').show();
+		
 	},
 	updateAppointment : function(e) {
 		e.preventDefault();
 		var formData = {};
 		var startDate = endDate = '';
-		$('#appList li').children('input, div input').each(function(i, el) {
+		$('#appList li input').each(function(i, el) {
 			if (el.id == 'entry-day-end-time') {
 				endDate = $(el).val().split(/[-T:]+/);
 			} else if (el.id == 'entry-day-time') {
@@ -75,7 +80,8 @@ this.$el.updatePolyfill();
 		});
 
 		formData['startTime'] = new Date(startDate[0], startDate[1]-1, startDate[2], startDate[3], startDate[4]);
-		formData['endTime'] = new Date(endDate[0], endDate[1]-1, endDate[2], endDate[3], pendDate[4]);
+		formData['endTime'] = new Date(endDate[0], endDate[1]-1, endDate[2], endDate[3], endDate[4]);
+
 		this.model.save(formData);
 		this.$el.updatePolyfill();
 

@@ -70,12 +70,15 @@
 			<form id="editAppointment" action="#">
 
 			<li><input id="title" type="text" value="<%= title %>"/></li>
-			<li> <input id="startTime-fake" type="text" value="<%= $.format.date( new Date( startTime), 'h:mm a' ) %>" />
-			<input id="entry-day-time" name="entry-day-time" type="datetime-local"/>
+			<li> <div class="start-cover"> <%= $.format.date( new Date( startTime), 'MMMM' ) %>, <%= $.format.date( new Date( startTime), 'dd' ) %> at <%= $.format.date( new Date( startTime), 'hh:mm a' ) %></div>
+			<div class="start-input"><input id="entry-day-time" name="entry-day-time" type="datetime-local"/></div>
 			</li>
 
-			<li> <input id="endTime-fake" type="text" value="<%= $.format.date( new Date( endTime), 'h:mm a' ) %>" />
-			<input id="entry-day-end-time" name="entry-day-end-time" type="datetime-local"/>
+			<li> 
+	<div class="start-cover"> <%= $.format.date( new Date( endTime), 'MMMM' ) %>, <%= $.format.date( new Date( endTime), 'dd' ) %> at <%= $.format.date( new Date( endTime), 'hh:mm a' ) %></div>			
+			<div class="start-input"><input id="entry-day-end-time" name="entry-day-end-time" type="datetime-local"/>  </div>	
+				
+			
 </li>
 			<li>
 			<button id="update">Add</button></li>
