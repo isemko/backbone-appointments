@@ -42,7 +42,7 @@ var AppointmentDetailView = AppointmentView.extend({
 	initialize : function() {
 
 
-		this.listenTo(this.model, 'change', this.render);
+		//this.listenTo(this.model, 'change', this.render);
 		$("#main-data").html(this.el);
 		$('#content').addClass('editApp');
 		
@@ -73,6 +73,7 @@ var AppointmentDetailView = AppointmentView.extend({
 				endDate = $(el).val().split(/[-T:]+/);
 			} else if (el.id == 'entry-day-time') {
 				//formData['startTime'] = $(el).val();
+				//console.log('at start')
 				startDate = $(el).val().split(/[-T:]+/);
 			} else {
 				formData[el.id] = $(el).val();
@@ -81,19 +82,21 @@ var AppointmentDetailView = AppointmentView.extend({
 
 		formData['startTime'] = new Date(startDate[0], startDate[1]-1, startDate[2], startDate[3], startDate[4]);
 		formData['endTime'] = new Date(endDate[0], endDate[1]-1, endDate[2], endDate[3], endDate[4]);
-
-		this.model.save(formData);
+		var self = this;
+		this.model.save(formData).complete(function(){
+			self.render();
+			
+		});
 		this.$el.updatePolyfill();
 
 	},
 	close : function() {
 		
 		$('#content').removeClass('editApp');
-		this.$el.empty();
-		this.$el.remove();
+		//this.$el.empty();
 		this.remove();
-		this.el = null;
-		this.$el = null;
+		//this.el = null;
+		//this.$el = null;
 
 	}
 })
@@ -209,12 +212,10 @@ var AppointmentsView = Backbone.View.extend({
 	close : function() {
 		while (this.subViews.length) {
 			var x = this.subViews.pop();
-			x.$el.empty();
-			x.$el.remove();
+			//x.$el.empty();
+			//x.$el.remove();
 			x.remove();
 
-			x.unbind();
-			x.off();
 		}
 		this.$el.remove();
 		this.remove();
