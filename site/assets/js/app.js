@@ -40,7 +40,17 @@ var AppointmentDetailView = AppointmentView.extend({
 		'click .start-cover' : 'toggleInput'
 	},
 	initialize : function() {
-
+/*
+ * 
+ * 
+ * 	jQuery('.selectBox select').on('change',function() {
+		jQuery.each($('.selectBox select'), function(i, val) {
+			$(this).siblings('span').html(this.options[this.selectedIndex].innerHTML);
+		})
+	})
+	jQuery.each($('.selectBox select'), function(i, val) {
+		$(this).siblings('span').html(this.options[this.selectedIndex].innerHTML);
+ */
 
 		//this.listenTo(this.model, 'change', this.render);
 		$("#main-data").html(this.el);
@@ -93,10 +103,10 @@ var AppointmentDetailView = AppointmentView.extend({
 	close : function() {
 		
 		$('#content').removeClass('editApp');
-		//this.$el.empty();
+		this.$el.empty();
 		this.remove();
-		//this.el = null;
-		//this.$el = null;
+		this.el = null;
+		this.$el = null;
 
 	}
 })
