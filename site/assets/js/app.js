@@ -2,7 +2,8 @@ var vent = _.extend({}, Backbone.Events);
 $.expr.cacheLength = 1;
 		jQuery.webshims.setOptions('forms forms-ext', {
 			replaceUI : false,
-			waitReady : false
+			waitReady : false,
+			replaceValidationUI : true
 		});
 var Model = Backbone.Model.extend({
 	idAttribute : '_id',
@@ -140,12 +141,32 @@ var AppointmentDetailView = AppointmentView.extend({
 		formData['startTime'] = new Date(startDate[0], startDate[1]-1, startDate[2], startDate[3], startDate[4]);
 		formData['endTime'] = new Date(endDate[0], endDate[1]-1, endDate[2], endDate[3], endDate[4]);
 		var self = this;
-		this.model.save(formData).complete(function(){
-			self.render();
-			//Router.navigate('#edit', true)
-		});
+		if (this.valid(formData)){
+			this.model.save(formData).complete(function(){
+				//self.render();
+				router.navigate('edit', true)
+			
+			});
+			}
 		//this.$el.updatePolyfill();
 
+	},
+	valid: function(f){
+	
+		for(var v in f){
+			if(f[v] == ''){
+				alert('please enter a value');
+				return false;
+			}
+			
+			
+		}
+		if(new Date(f['startTime']) > new Date(f['endTime'])){
+			alert('end date must come after start date');
+			return false
+		}
+
+		return true;
 	},
 	close : function() {
 		
@@ -364,7 +385,7 @@ var EditAppointmentsView = AppointmentsView.extend({
 		return (new Date(model.get('startTime')).getMonth() == timeCheck.month && new Date(model.get('startTime')).getDay() == timeCheck.day)
 	}
 })
-var Router = Backbone.Router.extend({
+var Router =  Backbone.Router.extend({
 	routes : {
 		"" : "Appointments",
 		"home" : "Appointments",
@@ -401,7 +422,7 @@ var Router = Backbone.Router.extend({
 	},
 	triggerSave : function(e){
 		this.preventDefault();
-		this.navigate('#edit', true)
+		this.navigate('edit', true)
 		vent.trigger('editsave', this);
 		
 	},
@@ -410,10 +431,10 @@ var Router = Backbone.Router.extend({
 		this.view = view;
 	}
 });
-
+var router ='';
 $(document).ready(function() {
 webshims.polyfill('forms forms-ext');
-	var router = new Router();
+	 router = new Router();
 	Backbone.history.start({
 
 	});
