@@ -213,9 +213,8 @@ padding: 15px 10px
 padding:20px 10px
 }
 .clear{clear:both;height:0px}
-input{background:inherit;}
+input{border:0; background:inherit;width:225px;height:15px; font: 1em Proxima Nova Light }
 .start-cover{cursor: pointer}
 .start-input{display:none;}
-input{width:200px;height:15px;}
-/*input['type=datetime-local']{border:1px solid;}*/
+
 .editApp ul#appList li{padding-bottom:10px;height:20px;}
