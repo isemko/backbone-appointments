@@ -79,7 +79,7 @@ a.go {
 ul#appList li {
 	font-family: "Proxima Nova Light", Helvetica, sans-serif;
 	list-style-type: none;
-	padding: 20px 0px 30px 10px;
+	padding: 20px 0px 0px 10px;
 	border-bottom: 1px solid #dddddd;
 	background-color: #fafafa;
 
@@ -140,17 +140,19 @@ margin-top:-20px;
 }
 #appList li .fr.hidden-delete-show{height:32px;margin-top:-1px}
 #appList li div {
-	float: left;
+	
 	margin: 0px 0px;;
 	
 }
-#appList li .title {
+#appList li div.title {
+float:left;
 margin: 0 0 0 10px
 }
 #appList li .outer .app-link, #appList li .outer .date, #appList li .outer .r, #appList li .outer .hidden-delete {
 	
 	float: right;
 }
+#appList li .outer{float:left;}
 .hidden-delete{display:none;}
 
 .hidden-delete-show{width:100px; background:#e83c3c; color:#fff; -webkit-animation:moveleft .2s 1; 
@@ -185,7 +187,7 @@ animation:hideleft .5s 1;}
 
 
 #appList li div.del {
-
+float:left;
 	padding: 12px 0px 5px 0px;
 	width: 17px;height 17px;
 	background: url('../img/del.png');

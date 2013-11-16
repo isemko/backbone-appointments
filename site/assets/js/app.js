@@ -45,7 +45,7 @@ var AppointmentDetailView = AppointmentView.extend({
 		this.listenTo(this.model, 'destroy', this.remove);
 		$("#main-data").html(this.el);
 		$('#content').addClass('editApp');
-		webshims.polyfill('forms forms-ext');
+		
 		
 		this.render();
 		
@@ -67,14 +67,15 @@ this.$el.updatePolyfill();
 			if (el.id == 'entry-day-end-time') {
 				endDate = $(el).val().split(/[-T:]+/);
 			} else if (el.id == 'entry-day-time') {
-				formData['startTime'] = $(el).val();
+				//formData['startTime'] = $(el).val();
 				startDate = $(el).val().split(/[-T:]+/);
 			} else {
 				formData[el.id] = $(el).val();
 			}
 		});
-		formData['startTime'] = new Date(parseInt(startDate[0]), parseInt(startDate[1]), parseInt(startDate[2]), parseInt(startDate[3]), parseInt(startDate[4])).getTime();
-		formData['endTime'] = new Date(parseInt(endDate[0]), parseInt(endDate[1]), parseInt(endDate[2]), parseInt(endDate[3]), parseInt(endDate[4])).getTime();
+
+		formData['startTime'] = new Date(startDate[0], startDate[1]-1, startDate[2], startDate[3], startDate[4]);
+		formData['endTime'] = new Date(endDate[0], endDate[1]-1, endDate[2], endDate[3], pendDate[4]);
 		this.model.save(formData);
 		this.$el.updatePolyfill();
 
@@ -230,7 +231,6 @@ var EditAppointmentsView = AppointmentsView.extend({
 		};
 
 		this.collection.sort();
-		//this.listenTo(this.collection, 'sort', this.render);
 		$("#main-data").html(this.el);
 
 		var self = this;
@@ -256,7 +256,7 @@ var EditAppointmentsView = AppointmentsView.extend({
 			//need new way of referencing
 			if (new Date(model.get('startTime')).getDay() != new Date(temp_date).getDay()) {
 				temp_model = model;
-				temp_date = temp_model.get('startTime')
+				temp_date = temp_model.get('startTime');
 				var hView = new HeaderView({
 					temp_date : temp_date,
 					id : temp_model.get('_id'),
@@ -358,7 +358,7 @@ var Router = Backbone.Router.extend({
 });
 
 $(document).ready(function() {
-
+webshims.polyfill('forms forms-ext');
 	var router = new Router();
 	Backbone.history.start({
 
