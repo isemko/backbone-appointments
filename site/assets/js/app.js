@@ -7,8 +7,8 @@ jQuery.webshims.setOptions('forms forms-ext', {
 	waitReady : false,
 	replaceValidationUI : true
 });*/
-define(['lib/backbone', 'models/Appointment', 'views/AppointmentView','views/EditView', 'views/AddView', 'views/DetailView', 'views/AppointmentsView'],
-function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, AppointmentsView){
+define(['lib/backbone', 'models/Appointment', 'views/AppointmentView','views/EditView', 'views/AddView', 'views/DetailView', 'views/AppointmentsView', 'views/EditAppointmentsView'],
+function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, AppointmentsView, EditAppointmentsView){
 	var Router = Backbone.Router.extend({
 	routes : {
 		"" : "Appointments",
@@ -27,18 +27,18 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 
 	},
 	editAppointments : function() {
-		this.loadView(new AppsView.EditAppointmentsView());
+		this.loadView(new EditAppointmentsView());
 
 	},
 	editAppointment : function(id) {
 
-		var appointment = new AppModel.Model({
+		var appointment = new AppModel({
 			_id : id
 		});
 		var self = this;
 		appointment.fetch({
 			success : function(data) {
-				self.loadView(new AppView.AppointmentDetailView({
+				self.loadView(new DetailView({
 					model : appointment
 				}))
 			}
@@ -46,7 +46,7 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 
 	},
 	addAppointment : function(){
-		this.loadView(new app.AppointmentAddView());
+		this.loadView(new AddView());
 	}
 	,
 	loadView : function(view) {

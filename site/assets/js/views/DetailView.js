@@ -19,7 +19,7 @@ define(["lib/backbone","lib/underscore","models/Appointment", "views/Appointment
 	},
 	render : function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		this.$el.updatePolyfill();
+		//this.$el.updatePolyfill();
 		this.$el.prepend("<header>" +
 		 "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li><a href='#home'>My Appointments</a></li>" + 
 		 "<li class='edit-save' ><a class='pr' href='#save'>Save</a></li></ul>" + "</nav></header>");

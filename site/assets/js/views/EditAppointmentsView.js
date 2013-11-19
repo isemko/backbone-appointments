@@ -1,5 +1,5 @@
 
-define(["lib/backbone", "AppointmentsView", "HeaderView", "collections/AppointmentsList"], function(Backbone, AppointmentView, HeaderView, Collection) {
+define(["lib/backbone", "views/AppointmentsView", "views/HeaderView","views/EditView", "collections/AppointmentsList"], function(Backbone, AppointmentsView, HeaderView,EditAppointmentView, Collection) {
 	var EditAppointmentsView = AppointmentsView.extend({
 	id : "appList",
 	initialize : function(e) {
@@ -89,6 +89,7 @@ define(["lib/backbone", "AppointmentsView", "HeaderView", "collections/Appointme
 
 	}
 }); 
-	
+
+return EditAppointmentsView;
 	
 });
