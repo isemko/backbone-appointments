@@ -1,4 +1,4 @@
-define(["lib/backbone","lib/underscore","models/Appointment", "views/DetailView"], function(Backbone, _, Appointment, AppointmentDetailView){
+define(["lib/backbone","lib/underscore","models/Appointment", "views/DetailView","lib/modernizr-custom","lib/polyfiller"], function(Backbone, _, Appointment, AppointmentDetailView,modernizr, webshims){
 	var AppointmentAddView = AppointmentDetailView.extend({
 	template : _.template($('#add-app').html()),
 	render : function() {
@@ -6,7 +6,10 @@ define(["lib/backbone","lib/underscore","models/Appointment", "views/DetailView"
 			today : new Date()
 		};
 		this.$el.html(this.template(this.model));
-		//this.$el.updatePolyfill();
+		$.webshims.loader.basePath = 'lib/shims';
+        $.webshims.polyfill('forms forms-ext');
+		this.$el.updatePolyfill();
+		
 		this.$el.prepend("<header>" +
 		 "<nav><ul id='main-nav'><li><a href='#home'>Cancel</a></li><li>New Appointment</li>" 
 		+ "<li class='edit-save' ><a class='pr' href='#save'>Save</a></li></ul>" + "</nav></header>");
