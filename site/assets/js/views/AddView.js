@@ -7,7 +7,7 @@ define(["lib/backbone","lib/underscore","models/Appointment", "views/DetailView"
 		};
 		this.$el.html(this.template(this.model));
 		$.webshims.loader.basePath = 'lib/shims';
-        $.webshims.polyfill('forms forms-ext');
+       
 		this.$el.updatePolyfill();
 		
 		this.$el.prepend("<header>" +

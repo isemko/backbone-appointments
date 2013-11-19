@@ -20,7 +20,7 @@ define(["lib/backbone","lib/underscore","models/Appointment", "views/Appointment
 	render : function() {
 		this.$el.html(this.template(this.model.toJSON()));
 		$.webshims.loader.basePath = 'lib/shims';
-        $.webshims.polyfill('forms forms-ext');
+       // $.webshims.polyfill('forms forms-ext');
 		this.$el.updatePolyfill();
 		this.$el.prepend("<header>" +
 		 "<nav><ul id='main-nav'><li><a href='#edit'>Cancel</a></li><li><a href='#home'>My Appointments</a></li>" + 

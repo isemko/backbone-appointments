@@ -1,12 +1,4 @@
-var app = app || {};
 
-$.expr.cacheLength = 1;
-/*
-jQuery.webshims.setOptions('forms forms-ext', {
-	replaceUI : false,
-	waitReady : false,
-	replaceValidationUI : true
-});*/
 define(['lib/backbone', 'models/Appointment', 'views/AppointmentView','views/EditView', 'views/AddView', 'views/DetailView', 'views/AppointmentsView', 'views/EditAppointmentsView'],
 function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, AppointmentsView, EditAppointmentsView){
 	var Router = Backbone.Router.extend({
@@ -19,7 +11,7 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 		"add" : "addAppointment"
 	},
 	initialize : function(options) {
-
+	
 	},
 	Appointments : function() {
 
