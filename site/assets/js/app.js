@@ -49,25 +49,3 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 	return Router;
 });
 
-/*
-$(document).ready(function() {
-	webshims.polyfill('forms forms-ext');
-	app.router = new app.Router();
-	Backbone.history.start({
-
-	});
-
-});
-
- for(var i=0; i<10; i++){jQuery.post( '/api/appointments', {
- 'title': 'appointment' +i,
- 'startTime': new Date( 2013, i, i+1, (i+1) * 2).getTime(),
- 'endTime': new Date( 2013, i, i+1,(i+2) *2 ).getTime()
- }, function(data, textStatus, jqXHR) {
- console.log( 'Post response:' );
- console.dir( data );
- console.log( textStatus );
- console.dir( jqXHR );
- });}
- * /
- */
