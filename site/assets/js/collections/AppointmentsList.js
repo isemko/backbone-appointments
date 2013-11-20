@@ -5,5 +5,5 @@ define(["lib/backbone", "models/Appointment"], function(Backbone, Model) {
 	});
 
 	return Collection;
-	Ï
+
 });
