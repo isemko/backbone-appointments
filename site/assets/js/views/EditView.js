@@ -1,9 +1,9 @@
-define(["lib/backbone","lib/underscore", "views/AppointmentView"], function(Backbone, _,  AppointmentView){
+define(["lib/backbone","lib/underscore", "views/AppointmentView", 'lib/text!templates/edit.html'], function(Backbone, _,  AppointmentView, editTemplate){
 	
 var EditAppointmentView = AppointmentView.extend({
 	tagName : 'li',
 	className : 'edit-list-item',
-	template : _.template($('#edit-template').html()),
+	template : _.template(editTemplate),
 	initialize : function(options) {
 
 		this.$el.attr("class", options.classId + ' ' + this.className);

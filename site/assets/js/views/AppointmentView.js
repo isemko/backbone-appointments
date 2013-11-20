@@ -1,8 +1,8 @@
 
-define(["lib/backbone"], function(Backbone){
+define(["lib/backbone",   'lib/text!templates/app.html'], function(Backbone, appTemplate){
 	var AppointmentView = Backbone.View.extend({
 	tagName : "li",
-	template : _.template($('#app-template').html()),
+	template : _.template(appTemplate),
 	events : {
 	},
 	initialize : function(e) {

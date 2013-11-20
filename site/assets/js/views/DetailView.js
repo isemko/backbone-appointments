@@ -1,8 +1,8 @@
-define(["lib/backbone","lib/underscore","models/Appointment", "views/AppointmentView","lib/modernizr-custom","lib/polyfiller"], function(Backbone,_, Appointment, AppointmentView,modernizr, webshims){
+define(["lib/backbone","lib/underscore","models/Appointment", "views/AppointmentView","lib/modernizr-custom","lib/polyfiller", "lib/text!templates/detail.html"], function(Backbone,_, Appointment, AppointmentView,modernizr, webshims, detailTemplate){
 	var AppointmentDetailView = AppointmentView.extend({
 	tagName : "ul",
 	id : "appList",
-	template : _.template($('#edit-app').html()),
+	template : _.template(detailTemplate),
 	events : {
 		'click .edit-save' : 'updateAppointment',
 		'click .start-cover' : 'toggleInput',

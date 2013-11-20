@@ -1,6 +1,6 @@
-define(["lib/backbone","lib/underscore","models/Appointment", "views/DetailView","lib/modernizr-custom","lib/polyfiller"], function(Backbone, _, Appointment, AppointmentDetailView,modernizr, webshims){
+define(["lib/backbone","lib/underscore","models/Appointment", "views/DetailView","lib/modernizr-custom","lib/polyfiller", 'lib/text!templates/add.html'], function(Backbone, _, Appointment, AppointmentDetailView,modernizr, webshims, addTemplate){
 	var AppointmentAddView = AppointmentDetailView.extend({
-	template : _.template($('#add-app').html()),
+	template : _.template(addTemplate),
 	render : function() {
 		this.model = {
 			today : new Date()

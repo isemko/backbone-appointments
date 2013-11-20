@@ -1,101 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-			<meta charset="utf-8">
+		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<title>View Test</title>
 		<link rel="stylesheet" href="assets/css/style.css" />
 		<script src="assets/js/lib/modernizr-custom.js"></script>
-<script src="assets/js/lib/polyfiller.js"></script>
+		<script src="assets/js/lib/polyfiller.js"></script>
 	</head>
 	<body>
 		<div id="content">
-
 			<div id="main-data"></div>
-			<div id="home-view">
-				<ul id="users-list"></ul>
-			</div>
 		</div>
-		<script type="text/template" id="app-template">
-			<div class="fl">
-			<div class='outer' >
-
-			<div class='title'> <%= title %></div>
-			</div>
-			</div>
-			<div class="fr"><div class='outer right'>
-
-			<div class='date'><%= $.format.date( new Date( startTime), 'h:mm a' ) %></div>
-			</div>
-			</div>
-			<div class='clear'></div>
-		</script>
-		<script type="text/template" id="edit-template">
-			<div class="fl">
-			<div class='outer' >
-			<div class='del'></div>
-			<div class='title'> <%= title %></div>
-			</div>
-			</div>
-			<div class="fr"><div class='outer right'>
-
-			<div class='app-link'><a class='go' href='#appointments/<%= _id %>'> </a></div>
-			<div class='date'><%= $.format.date( new Date( startTime), 'h:mm a' ) %></div>
-
-			</div>
-			<div class="fr hidden-delete">delete</div>
-			</div>
-
-			<div class='clear'></div>
-		</script>
-		<script type="text/template" id="det-template">
-			<div class="fl">
-			<div class='outer' >
-			<div class='del'></div>
-			<div class='title'> <input type="text" value="<%= title %>" name="ap-title" id="ap-title"/></div>
-			<div class="change">Change</div>
-			</div>
-
-			</div>
-			<div class='clear'></div>
-		</script>
-
-		<script type="text/template" id="edit-app" >
-			<form id="editAppointment" action="#">
-
-			<li><input id="title" type="text" value="<%= title %>" required/></li>
-			<li><!-- <div class="start-cover"> <%= $.format.date( new Date( startTime), 'MMMM' ) %>, <%= $.format.date( new Date( startTime), 'dd' ) %> at <%= $.format.date( new Date( startTime), 'h:mm a' ) %></div>-->
-			<div class="start-input"><input id="entry-day-time" name="entry-day-time" type="datetime-local" value="<%= $.format.date( new Date( startTime), 'yyyy' ) %>-<%=$.format.date( new Date( startTime), 'MM' ) %>-<%=$.format.date( new Date( startTime), 'dd' ) %>T<%= $.format.date( new Date( startTime), 'HH:mm' ) %>:00"/></div>
-			</li>
-
-			<li>
-			<!--<div class="start-cover"> <%= $.format.date( new Date( endTime), 'MMMM' ) %>, <%= $.format.date( new Date( endTime), 'dd' ) %> at <%= $.format.date( new Date( endTime), 'h:mm a' ) %></div>-->
-			<div class="start-input"><input id="entry-day-end-time" name="entry-day-end-time" type="datetime-local" value="<%= $.format.date( new Date( endTime), 'yyyy' ) %>-<%=$.format.date( new Date( endTime), 'MM' ) %>-<%=$.format.date( new Date( endTime), 'dd' ) %>T<%= $.format.date( new Date( endTime), 'HH:mm' ) %>:00"/>  </div>
-
-			</li>
-			<li><input type="text" name="appointmentName" id="appointmentName" value="<%= appointmentName %>" /></li>
-			<li><textarea name="description" id="description" ><%= description %></textarea></li>
-
-			</form>
-		</script>
-		<script type="text/template" id="add-app" >
-			<form id="addAppointment" action="#">
-
-			<li><input id="title" type="text"  placeholder="Title"/></li>
-			<li>
-			<div class="start-input"><input id="entry-day-time" name="entry-day-time" type="datetime-local"  value="<%= $.format.date( new Date( today), 'yyyy' ) %>-<%=$.format.date( new Date( today), 'MM' ) %>-<%=$.format.date( new Date( today), 'dd' ) %>T<%= $.format.date( new Date( today), 'HH:mm' ) %>:00"/></div>
-			</li>
-
-			<li>
-
-			<div class="start-input"><input id="entry-day-end-time" name="entry-day-end-time" type="datetime-local" value="<%= $.format.date( new Date( today), 'yyyy' ) %>-<%=$.format.date( new Date( today), 'MM' ) %>-<%=$.format.date( new Date( today), 'dd' ) %>T<%= $.format.date( new Date( today), 'HH:mm' ) %>:00"/>  </div>
-
-			</li>
-			<li><input type="text" name="appointmentName" id="appointmentName" placeholder="Appointment with..." /></li>
-			<li><textarea name="description" id="description" placeholder="Description" ></textarea></li>
-
-			</form>
-		</script>
 		<script src="assets/js/lib/require.js" data-main="assets/js/main.js"></script>
 
 	</body>

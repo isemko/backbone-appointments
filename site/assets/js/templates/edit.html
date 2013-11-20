@@ -1,0 +1,25 @@
+<div class="fl">
+	<div class='outer' >
+		<div class='del'></div>
+		<div class='title'>
+			<%= title %>
+		</div>
+	</div>
+</div>
+<div class="fr">
+	<div class='outer right'>
+
+		<div class='app-link'>
+			<a class='go' href='#appointments/<%= _id %>'> </a>
+		</div>
+		<div class='date'>
+			<%= $.format.date( new Date( startTime), 'h:mm a' ) %>
+		</div>
+
+	</div>
+	<div class="fr hidden-delete">
+		delete
+	</div>
+</div>
+
+<div class='clear'></div>
