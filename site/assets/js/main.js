@@ -1,8 +1,8 @@
 require.config({
 	paths : {
 		'jquery' : 'lib/jquery-1.10.2.min',
-		'jqdate' : 'lib/jquery.dateFormat-1.0',
-		'polyfiller' : 'lib/polyfiller'//needs to be loaded after jquery even though it is used globally
+		'jqdate' : 'lib/jquery.dateFormat-1.0'
+		//'polyfiller' : 'lib/polyfiller'//needs to be loaded after jquery even though it is used globally
 	},
 	shim : {
 		'lib/underscore' : {
@@ -11,18 +11,15 @@ require.config({
 		'lib/backbone' : {
 			deps : ["lib/underscore", "jquery"],
 			exports : 'Backbone'
-		},
-		"modernizr" : {
-			deps : ["jquery"],
-			exports : "modernizr"
 		}
+			
 	}
 });
 var router, vent;
 
-require(["jquery", "lib/underscore", "lib/backbone", "app", "lib/modernizr-custom", "lib/polyfiller"], function($, _, Backbone, Router, modernizr) {
+require(["jquery", "lib/underscore", "lib/backbone", "app"], function($, _, Backbone, Router) {
 
-	$(function() {
+	$(document).ready(function() {
 		$.webshims.debug = false;
 		$.webshims.setOptions('forms forms-ext', {
 			replaceUI : false,
