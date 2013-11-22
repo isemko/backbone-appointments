@@ -1,7 +1,7 @@
 require.config({
 	paths : {
-		'jquery' : 'lib/jquery-1.10.2.min',
-		'jqdate' : 'lib/jquery.dateFormat-1.0'
+		jquery : 'lib/jquery-1.10.2.min',
+		jqdate : 'lib/jquery.dateFormat-1.0'
 		//'polyfiller' : 'lib/polyfiller'//needs to be loaded after jquery even though it is used globally
 	},
 	shim : {
@@ -19,7 +19,7 @@ var router, vent;
 
 require(["jquery", "lib/underscore", "lib/backbone", "app"], function($, _, Backbone, Router) {
 
-	$(document).ready(function() {
+	$(function() {
 		$.webshims.debug = false;
 		$.webshims.setOptions('forms forms-ext', {
 			replaceUI : false,
@@ -28,9 +28,9 @@ require(["jquery", "lib/underscore", "lib/backbone", "app"], function($, _, Back
 		});
 
 		$.webshims.polyfill('forms forms-ext');
-
-		router = new Router();
 		vent = _.extend({}, Backbone.Events);
+		router = new Router();
+
 		$.expr.cacheLength = 1;
 
 		Backbone.history.start({

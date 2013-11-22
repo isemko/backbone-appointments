@@ -163,8 +163,9 @@ nav {
 50%{margin-left:-50px},
 100%{margin-left:-100px}
 }
-
+.del{display:none;}
 #appList li div.del {
+	
 	float: left;
 	padding: 12px 0px 5px 0px;
 	width: 17px;height 17px;
@@ -172,7 +173,7 @@ nav {
 	cursor: pointer;
 }
 .app-link {
-	display: block;
+	display: none;
 	padding: 15px 10px
 }
 #appList li .outer {
@@ -259,3 +260,51 @@ input {
 }
 .editApp #appList li:last-child{ border:none;height:100%;}
 textarea{border:0; font: 1em 'Proxima Nova Light'}
+.head
+.main-nav {
+	margin: 0 auto;
+	height: 2em;
+	background: #4daf7b;
+	width: 100%;
+	color: #fff;
+	padding-top: 10px;
+	text-align: center;
+}
+nav.head ul li {
+
+	width: 58%;
+	float: left;
+	cursor: pointer;
+	padding: .25em 0;
+	font-size: 1em;
+	background-color: transparent;
+	border: 0;
+}
+nav.head ul li.button {
+	text-align: left;
+	width: 18%;
+	padding: .25em 0 0 2%;
+	text-shadow: 1px 1px 1px #444;
+}
+nav.head ul li.button.nav-last {
+	text-align: right;:
+	width: 18%;
+	padding: .25em 0 0 2%;
+	text-shadow: 1px 1px 1px #444;
+}
+nav.head ul li.nav-last.button {
+	text-align: right;
+	width: 18%;
+	padding: 0 0 0 2%
+}
+
+nav.head ul li a {
+	color: #fff;
+}
+nav.head ul li.nav-last {
+	font-weight: bold;
+	font-size: 32px;
+	line-height: 25px
+}
+.detail,.edit{ display:none}
+li.nav-last:after{clear:both}

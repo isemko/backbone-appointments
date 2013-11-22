@@ -5,7 +5,7 @@ var EditAppointmentView = AppointmentView.extend({
 	className : 'edit-list-item',
 	template : _.template(editTemplate),
 	initialize : function(options) {
-
+vent.on('show-edit', this.showEdit, this);
 		this.$el.attr("class", options.classId + ' ' + this.className);
 
 		this.render();
@@ -27,6 +27,10 @@ var EditAppointmentView = AppointmentView.extend({
 		this.$el.find('.hidden-delete').addClass('hidden-delete-show').removeClass('hidden-delete');
 		this.$el.find('.fl').addClass('slide-left');
 
+	},
+	showEdit : function(){
+		this.$el.find('.app-link').show();
+		
 	}
 });
 	
