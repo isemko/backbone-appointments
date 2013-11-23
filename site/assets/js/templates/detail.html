@@ -1,7 +1,7 @@
 <form id="editAppointment" action="#">
 
 	<li>
-		<input id="title" type="text" value="<%= title %>" required/><span class='title-error error'></span>
+		<input id="title" type="text" value="<%= title %>" required/><br/><span class='title-error error'></span>
 	</li>
 	<li>
 	<div class="start-input">
@@ -12,16 +12,16 @@
 	<li>
 	<div class="start-input">
 			<input id="entry-day-end-time" name="entry-day-end-time" type="datetime-local" value="<%= $.format.date( new Date( endTime), 'yyyy' ) %>-<%=$.format.date( new Date( endTime), 'MM' ) %>-<%=$.format.date( new Date( endTime), 'dd' ) %>T<%= $.format.date( new Date( endTime), 'HH:mm' ) %>:00"/>
-		<span class='endtTime-error error'></span>
+		<br/><span class='endtTime-error error'></span>
 		</div>
 
 	</li>
 	<li>
 		<input type="text" name="appointmentName" id="appointmentName" value="<%= appointmentName %>" />
-		<span class='appointmentName-error error'></span>
+		<br/><span class='appointmentName-error error'></span>
 	</li>
 	<li>
 		<textarea name="description" id="description" ><%= description %></textarea>
-		<span class='description-error error'></span>
+		<br/><span class='description-error error'></span>
 </li>
 </form>

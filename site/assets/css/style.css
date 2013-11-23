@@ -245,7 +245,7 @@ input {
 
 .editApp ul#appList li {
 	padding-bottom: 10px;
-	height: 20px;
+	height: 100%;
 }
 #appList
 #main-nav {
