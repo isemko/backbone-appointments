@@ -22,19 +22,22 @@ define(["lib/backbone", "lib/underscore", "views/AppointmentView", 'lib/text!tem
 			this.$el.empty();
 			this.model.destroy();
 			this.remove();
-			
+
 			return this;
 		},
-		showDelete : function() {
+		showDelete : function(e) {
 			this.$el.find('.hidden-delete').addClass('hidden-delete-show').removeClass('hidden-delete');
-			this.$el.find('.fl').addClass('slide-left');
+			this.$el.find('.fl').removeClass('slide-right').addClass('slide-left');
 
 		},
-		showEdit : function() {
+		showEdit : function(e) {
 			if (this.$el.find('.app-link').is(':visible')) {
+				this.$el.find('.hidden-delete-show').removeClass('.hidden-delete-show').addClass('hidden-delete');
 				this.$el.find('.app-link, .del').fadeOut('fast');
+
+				this.$el.find('.fl').removeClass('slide-left');
 			} else {
-				this.$el.find('.app-link, .del').fadeIn('fast');
+				this.$el.find('.app-link, .del').fadeIn('slow');
 			}
 
 		}

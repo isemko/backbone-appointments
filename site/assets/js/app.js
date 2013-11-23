@@ -14,16 +14,21 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 		this.loadNavView(new NavView());
 	},
 	Appointments : function() {
-
-		this.loadView(new AppointmentsView());
+	
+		vent.trigger('switchhead', 'main');
 		
+		this.loadView(new AppointmentsView({loadcheck: false}));
+	
 	},
 	editAppointments : function() {
-		this.loadView(new EditAppointmentsView());
+		vent.trigger('switchhead', 'edit');
+		if(!this.view ){
+			this.loadView(new AppointmentsView({loadcheck: true}));
 
+		}
 	},
 	editAppointment : function(id) {
-
+		vent.trigger('switchhead', 'detail');
 		var appointment = new AppModel({
 			_id : id
 		});
@@ -32,9 +37,9 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 			success : function(data) {
 				self.loadView(new DetailView({
 					model : appointment
-				}))
+				}));
 			}
-		})
+		});
 
 	},
 	addAppointment : function(){

@@ -4,7 +4,7 @@ define(["lib/backbone", "views/AppointmentsView", "views/HeaderView","views/Edit
 	id : "appList",
 	initialize : function(e) {
 		vent.on('dateheadercheck', this.checkHeader, this);
-		vent.trigger('switchhead', 'edit')
+		vent.trigger('switchhead', 'edit');
 		this.collection = new Collection();
 		// sort by date ascending
 		this.collection.comparator = function(m) {
@@ -54,8 +54,7 @@ define(["lib/backbone", "views/AppointmentsView", "views/HeaderView","views/Edit
 
 		})
 
-		/*this.$el.prepend("<header>" + "<nav><ul id='main-nav'><li><a href='#home'>Done</a></li><li><a href='#edit'>Edit Appointments</a></li>" + "<li  class='nav-last'></li></ul>" + "</nav></header>");
-*/
+	
 	},
 	checkHeader : function(e) {
 		//find total number of the day's class

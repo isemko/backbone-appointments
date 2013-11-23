@@ -6,7 +6,9 @@ define(["lib/backbone", "lib/underscore", "lib/text!templates/nav.html"], functi
 		template : navTemplate,
 		events : {
 			'click .go-edit, .done' : 'triggerEdit',
-			'click .done' : 'triggerHome'
+			'click .done' : 'triggerHome',
+			'click .cancel-add' : 'triggerHome',
+			'click .add-save' : 'triggerAddSave'
 
 		},
 		initialize : function() {
@@ -30,12 +32,15 @@ define(["lib/backbone", "lib/underscore", "lib/text!templates/nav.html"], functi
 		triggerEdit : function(e) {
 			vent.trigger('show-edit', this);
 			this.switchHead('edit');
-
 		},
 		triggerHome : function() {
 			vent.trigger('show-edit', this);
 			this.switchHead('main');
-
+			router.navigate('home', true);
+		},
+		triggerAddSave : function(){
+			vent.trigger('add-save', this);
+			
 		}
 	});
 	return NavView;

@@ -3,10 +3,6 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 		tagName : "ul",
 		id : "appList",
 		subViews : [],
-		events : {
-			'click .edit' : 'editView'
-
-		},
 		initialize : function(e) {
 		vent.on('dateheadercheck', this.checkHeader, this);
 			this.collection = new Collection();
@@ -23,8 +19,11 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 			this.collection.fetch({
 			}).complete(function() {
 				self.render();
+				if(e.loadcheck){
+				vent.trigger('show-edit', this);
+				}
 			});
-
+			
 		},
 		formatDate : function(d) {
 			return $.format.date(new Date(d), 'ddd, MMMM d, yyyy').toUpperCase()
@@ -104,9 +103,6 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 				vent.off('show-edit', x.editView, x);
 
 			}
-			//this.$el.find('nav li').each(function(){this.})
-
-			//console.log(this.$el)
 			this.$el.remove();
 			this.remove();
 			this.el = null;

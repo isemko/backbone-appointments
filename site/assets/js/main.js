@@ -24,7 +24,8 @@ require(["jquery", "lib/underscore", "lib/backbone", "app"], function($, _, Back
 		$.webshims.setOptions('forms forms-ext', {
 			replaceUI : false,
 			waitReady : false,
-			debug: false
+			debug: false,
+			addValidators: true
 		});
 
 		$.webshims.polyfill('forms forms-ext');
