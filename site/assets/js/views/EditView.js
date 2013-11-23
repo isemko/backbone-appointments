@@ -5,7 +5,8 @@ var EditAppointmentView = AppointmentView.extend({
 	className : 'edit-list-item',
 	template : _.template(editTemplate),
 	initialize : function(options) {
-vent.on('show-edit', this.showEdit, this);
+		vent.on('show-edit', this.showEdit, this);
+
 		this.$el.attr("class", options.classId + ' ' + this.className);
 
 		this.render();
@@ -29,7 +30,12 @@ vent.on('show-edit', this.showEdit, this);
 
 	},
 	showEdit : function(){
-		this.$el.find('.app-link').show();
+		if(this.$el.find('.app-link').attr('display') == 'none'){
+			this.$el.find('.app-link, .del').show();
+		}
+		else{
+			this.$el.find('.app-link, .del').hide();
+		}
 		
 	}
 });
