@@ -343,7 +343,8 @@ nav.head ul li.nav-last {
 	line-height: 25px
 }
 nav.head ul li.nav-last.detail {
-	font-weight: bold;
+padding-top:.25em;
+	font-weight: normal;
 	font-size: 1em;
 	line-height: 1em;
 
