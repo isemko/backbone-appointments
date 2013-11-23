@@ -16,6 +16,12 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 	Appointments : function() {
 	
 		vent.trigger('switchhead', 'main');
+		if(!$('#main-data').hasClass('transition')){
+			$('#main-data').attr('class', 'center');
+		}else{
+			$('#main-data').attr('class', 'center transition');
+			$('#alt-data').attr('class', 'right transition');
+		}
 		
 		this.loadView(new AppointmentsView({loadcheck: false}));
 	
@@ -28,6 +34,7 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 		}
 	},
 	editAppointment : function(id) {
+	
 		vent.trigger('switchhead', 'detail');
 		var appointment = new AppModel({
 			_id : id
@@ -35,14 +42,21 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 		var self = this;
 		appointment.fetch({
 			success : function(data) {
+			
 				self.loadView(new DetailView({
 					model : appointment
 				}));
+			$('#main-data').attr('class', 'left transition');
+			$('#alt-data').attr('class', 'center transition');
+					
 			}
+			
 		});
 
 	},
 	addAppointment : function(){
+		$('#main-data').attr('class', 'left transition');
+		$('#alt-data').attr('class', 'center transition');
 		this.loadView(new AddView());
 	}
 	,

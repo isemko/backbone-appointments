@@ -49,21 +49,82 @@ body {
 #content {
 
 	position: absolute;
-	overflow-x: hidden;
+	
 	width: 100%;
 	height: 100%;
 }
 #content.editApp {
-	overflow-x: visible;
+	
 }
-@media (min-width: 768px) {
-	#content {
-		position: relative;
-		width: 768px;
-		margin: 0 auto;
-	}
+#main-data, #alt-data {
+	width: 100%;
+}
+#alt-data {
+	
 
 }
+#alt-data.hide-main {
+	-webkit-animation: hidealt .5s 1;
+	animation: hidealt .5s 1;
+	margin-left: 100%;
+}
+#alt-data.show-main {
+	-webkit-animation: hidealt .5s 1;
+	animation: showalt .5s 1;
+	margin-left: 0%;
+}
+#main-data.hide-main {
+	-webkit-animation: hidemain .5s 1;
+	animation: hidemain .5s 1;
+	margin-left: -100%;
+}
+#main-data.show-main {
+	-webkit-animation: showmain .5s 1;
+	animation: showmain .5s 1;
+	margin-left: 0%;
+}
+@keyframes showalt{
+0%{margin-left:100%},
+50%{margin-left:50%},
+100%{margin-left:0%}
+}
+@keyframes hidealt{
+0%{margin-left:0},
+50%{margin-left:50%},
+100%{margin-left:100%}
+}
+@keyframes hidemain{
+0%{margin-left:0px},
+50%{margin-left:-50%},
+100%{margin-left:-100%}
+}
+@keyframes showmain{
+0%{margin-left:-100%},
+50%{margin-left:-50%},
+100%{margin-left:0%}
+}
+
+@-webkit-keyframes showalt{
+0%{margin-left:100%},
+50%{margin-left:50%},
+100%{margin-left:0%}
+}
+@-webkit-keyframes hidealt{
+0%{margin-left:0},
+50%{margin-left:50%},
+100%{margin-left:100%}
+}
+@-webkit-keyframes hidemain{
+0%{margin-left:0px},
+50%{margin-left:-50%},
+100%{margin-left:-100%}
+}
+@-webkit-keyframes showmain{
+0%{margin-left:-100%},
+50%{margin-left:-50%},
+100%{margin-left:0%}
+}
+
 a {
 	text-decoration: none;
 }
@@ -140,7 +201,7 @@ nav {
 	color: #fff;
 	-webkit-animation: moveright .2s 1;
 	animation: moveright .5s 1;
-	padding:0px;
+	padding: 0px;
 }
 .slide-left {
 	-webkit-animation: hideleft .2s 1;
@@ -198,9 +259,11 @@ nav {
 50%{margin-left:-50px},
 100%{margin-left:-100px}
 }
-.del{display:none;}
+.del {
+	display: none;
+}
 #appList li div.del {
-	
+
 	float: left;
 	padding: 12px 0px 5px 0px;
 	width: 17px;height 17px;
@@ -256,7 +319,6 @@ input {
 	color: #fff;
 	padding-top: 10px;
 	text-align: center;
-	
 }
 #appList nav ul li {
 
@@ -294,8 +356,14 @@ input {
 	font-size: 32px;
 	line-height: 25px
 }
-.editApp #appList li:last-child{ border:none;height:100%;}
-textarea{border:0; font: 1em 'Proxima Nova Light'}
+.editApp #appList li:last-child {
+	border: none;
+	height: 100%;
+}
+textarea {
+	border: 0;
+	font: 1em 'Proxima Nova Light'
+}
 nav.head .main-nav {
 	margin: 0 auto;
 	height: 2em;
@@ -304,7 +372,7 @@ nav.head .main-nav {
 	color: #fff;
 	padding-top: 10px;
 	text-align: center;
-	overflow:hidden;
+	overflow: hidden;
 }
 nav.head ul li {
 
@@ -343,12 +411,39 @@ nav.head ul li.nav-last {
 	line-height: 25px
 }
 nav.head ul li.nav-last.detail {
-padding-top:.25em;
+	padding-top: .25em;
 	font-weight: normal;
 	font-size: 1em;
 	line-height: 1em;
-
 }
-.detail,.edit{ display:none}
-li.nav-last:after{clear:both}
-.error{font-size:.7em; color:#ff0000}
+.detail, .edit {
+	display: none
+}
+li.nav-last:after {
+	clear: both
+}
+.error {
+	font-size: .7em;
+	color: #ff0000
+}
+#main-data, #alt-data{position:absolute;top:40px; left:0;}
+#main-data.left , #alt-data.left{
+
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
+ 
+#main-data.center , #alt-data.center{
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+ 
+#main-data.right , #alt-data.right{
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
+ 
+#main-data.transition, #alt-data.transition {
+    -webkit-transition-duration: .25s;
+    transition-duration: .25s;
+}

@@ -10,7 +10,7 @@ define(["lib/backbone", "lib/underscore", "models/Appointment", "views/Appointme
 		},
 		initialize : function() {
 
-			$("#main-data").html(this.el);
+			$("#alt-data").html(this.el);
 			$('#content').addClass('editApp');
 
 			this.render();
@@ -52,6 +52,8 @@ define(["lib/backbone", "lib/underscore", "models/Appointment", "views/Appointme
 			if (!v) {
 				this.model.save(formData).complete(function() {
 					router.navigate('home', true);
+					$('#main-data').attr('class', 'center transition');
+					$('#alt-data').attr('class', 'right transition');
 
 				});
 			} else {
