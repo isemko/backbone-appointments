@@ -63,13 +63,7 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 	loadView : function(view) {
 		this.view && (this.view.close ? this.view.close() : this.view.remove());
 		this.view = view;
-			if($('#main-data').hasClass('left')){
-			//$('#main-data').css('border', '.1em solid transparent');
-			$('#main-data').attr('class', 'center transition');
-			$('#alt-data').attr('class', 'right transition');
-		}else{
-			
-		}
+		
 	},
 	loadNavView : function(view){
 		this.navview && (this.this.navview.close ? this.this.navview.close() : this.this.navview.remove());

@@ -4,7 +4,7 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 		id : "appList",
 		subViews : [],
 		initialize : function(e) {
-		vent.on('dateheadercheck', this.checkHeader, this);
+			vent.on('dateheadercheck', this.checkHeader, this);
 			this.collection = new Collection();
 			// sort by date ascending
 			this.collection.comparator = function(m) {
@@ -19,11 +19,16 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 			this.collection.fetch({
 			}).complete(function() {
 				self.render();
-				if(e.loadcheck){
-				vent.trigger('show-edit', this);
+				if ($('#main-data').hasClass('left')) {
+
+					$('#main-data').attr('class', 'center transition');
+					$('#alt-data').attr('class', 'right transition');
+				}
+				if (e.loadcheck) {
+					vent.trigger('show-edit', this);
 				}
 			});
-			
+
 		},
 		formatDate : function(d) {
 			return $.format.date(new Date(d), 'ddd, MMMM d, yyyy').toUpperCase()
@@ -62,7 +67,7 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 
 			})
 		},
-	
+
 		checkHeader : function(e) {
 			//find total number of the day's class
 			$listCount = $('.' + $(e.$el[0]).attr('class').split(' ')[0]).length - 1;
