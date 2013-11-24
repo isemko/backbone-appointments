@@ -68,6 +68,7 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 
 					$('#main-data').attr('class', 'center transition');
 					$('#alt-data').attr('class', 'right transition');
+					$('#main-data').css('height', '100%');
 				}
 		},
 
