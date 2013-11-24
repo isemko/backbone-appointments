@@ -37,6 +37,7 @@ define(["lib/backbone", "lib/underscore", "lib/text!templates/nav.html"], functi
 			vent.trigger('show-edit', this);
 			this.switchHead('main');
 			router.navigate('home', true);
+		
 		},
 		triggerAddSave : function(){
 			vent.trigger('add-save', this);

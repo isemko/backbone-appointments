@@ -16,15 +16,13 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 	Appointments : function() {
 	
 		vent.trigger('switchhead', 'main');
-		if(!$('#main-data').hasClass('transition')){
-			$('#main-data').attr('class', 'center');
-		}else{
-			$('#main-data').attr('class', 'center transition');
-			$('#alt-data').attr('class', 'right transition');
-		}
+		
+			//
+			//$('#alt-data').attr('class', 'right transition');
 		
 		this.loadView(new AppointmentsView({loadcheck: false}));
 	
+		//$('#main-data').attr('class', 'center transition');
 	},
 	editAppointments : function() {
 		vent.trigger('switchhead', 'edit');
@@ -55,14 +53,23 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 
 	},
 	addAppointment : function(){
-		$('#main-data').attr('class', 'left transition');
-		$('#alt-data').attr('class', 'center transition');
+		
+		
 		this.loadView(new AddView());
+			$('#main-data').attr('class', 'left transition');
+			$('#alt-data').attr('class', 'center transition');
 	}
 	,
 	loadView : function(view) {
 		this.view && (this.view.close ? this.view.close() : this.view.remove());
 		this.view = view;
+			if($('#main-data').hasClass('left')){
+			$('#main-data').css('border', '1px solid transparent')
+			$('#main-data').attr('class', 'center transition');
+			$('#alt-data').attr('class', 'right transition');
+		}else{
+			
+		}
 	},
 	loadNavView : function(view){
 		this.navview && (this.this.navview.close ? this.this.navview.close() : this.this.navview.remove());

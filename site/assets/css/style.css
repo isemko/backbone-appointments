@@ -59,71 +59,6 @@ body {
 #main-data, #alt-data {
 	width: 100%;
 }
-#alt-data {
-	
-
-}
-#alt-data.hide-main {
-	-webkit-animation: hidealt .5s 1;
-	animation: hidealt .5s 1;
-	margin-left: 100%;
-}
-#alt-data.show-main {
-	-webkit-animation: hidealt .5s 1;
-	animation: showalt .5s 1;
-	margin-left: 0%;
-}
-#main-data.hide-main {
-	-webkit-animation: hidemain .5s 1;
-	animation: hidemain .5s 1;
-	margin-left: -100%;
-}
-#main-data.show-main {
-	-webkit-animation: showmain .5s 1;
-	animation: showmain .5s 1;
-	margin-left: 0%;
-}
-@keyframes showalt{
-0%{margin-left:100%},
-50%{margin-left:50%},
-100%{margin-left:0%}
-}
-@keyframes hidealt{
-0%{margin-left:0},
-50%{margin-left:50%},
-100%{margin-left:100%}
-}
-@keyframes hidemain{
-0%{margin-left:0px},
-50%{margin-left:-50%},
-100%{margin-left:-100%}
-}
-@keyframes showmain{
-0%{margin-left:-100%},
-50%{margin-left:-50%},
-100%{margin-left:0%}
-}
-
-@-webkit-keyframes showalt{
-0%{margin-left:100%},
-50%{margin-left:50%},
-100%{margin-left:0%}
-}
-@-webkit-keyframes hidealt{
-0%{margin-left:0},
-50%{margin-left:50%},
-100%{margin-left:100%}
-}
-@-webkit-keyframes hidemain{
-0%{margin-left:0px},
-50%{margin-left:-50%},
-100%{margin-left:-100%}
-}
-@-webkit-keyframes showmain{
-0%{margin-left:-100%},
-50%{margin-left:-50%},
-100%{margin-left:0%}
-}
 
 a {
 	text-decoration: none;
@@ -266,7 +201,7 @@ nav {
 
 	float: left;
 	padding: 12px 0px 5px 0px;
-	width: 17px;height 17px;
+	width: 17px;
 	background: url('../img/del.png');
 	cursor: pointer;
 }
@@ -391,7 +326,7 @@ nav.head ul li.button {
 	text-shadow: 1px 1px 1px #444;
 }
 nav.head ul li.button.nav-last {
-	text-align: right;:
+	text-align: right;
 	width: 18%;
 	padding: .25em 0 0 2%;
 	text-shadow: 1px 1px 1px #444;
