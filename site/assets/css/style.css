@@ -51,6 +51,7 @@ body {
 
 	position: absolute;
 	overflow-x:hidden;
+	overflow-y:visible;
 	width: 100%;
 	min-height:600px;
 
