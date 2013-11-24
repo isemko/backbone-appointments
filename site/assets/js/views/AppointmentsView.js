@@ -65,11 +65,11 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 
 			});
 				if ($('#main-data').hasClass('left')) {
-
+					
 					$('#main-data').attr('class', 'center transition');
 					$('#alt-data').attr('class', 'right transition');
-					$('#content').css('height', $('#main-data').height() +5+'px');
-					alert($('#content').height())
+					$('#main-data').css('border-bottom', '1px solid transparent');
+					
 				}
 		},
 
