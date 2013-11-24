@@ -60,6 +60,7 @@ body {
 }
 #main-data, #alt-data {
 width:100.1%;
+padding-bottom:20px;
 }
 
 a {
