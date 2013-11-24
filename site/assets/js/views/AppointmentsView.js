@@ -19,15 +19,16 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 			this.collection.fetch({
 			}).complete(function() {
 				self.render();
+			
+				if (e.loadcheck) {
+					vent.trigger('show-edit', this);
+				}
+			});
 				if ($('#main-data').hasClass('left')) {
 
 					$('#main-data').attr('class', 'center transition');
 					$('#alt-data').attr('class', 'right transition');
 				}
-				if (e.loadcheck) {
-					vent.trigger('show-edit', this);
-				}
-			});
 
 		},
 		formatDate : function(d) {

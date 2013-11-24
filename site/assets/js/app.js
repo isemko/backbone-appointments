@@ -16,13 +16,11 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 	Appointments : function() {
 	
 		vent.trigger('switchhead', 'main');
-		
-			//
-			//$('#alt-data').attr('class', 'right transition');
+
 		
 		this.loadView(new AppointmentsView({loadcheck: false}));
 	
-		//$('#main-data').attr('class', 'center transition');
+		
 	},
 	editAppointments : function() {
 		vent.trigger('switchhead', 'edit');
