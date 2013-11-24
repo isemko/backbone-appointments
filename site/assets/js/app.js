@@ -64,7 +64,7 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 		this.view && (this.view.close ? this.view.close() : this.view.remove());
 		this.view = view;
 			if($('#main-data').hasClass('left')){
-			$('#main-data').css('border', '.01em solid transparent')
+			$('#main-data').css('border', '.1em solid transparent');
 			$('#main-data').attr('class', 'center transition');
 			$('#alt-data').attr('class', 'right transition');
 		}else{

@@ -43,7 +43,10 @@ define(["lib/backbone", "lib/underscore", "models/Appointment", "views/DetailVie
 				var appV = new Appointment(formData)
 				appV.save(formData).complete(function() {
 					router.navigate('home', true);
+						$('#main-data').css('border', '.01em solid transparent');
+					$('#main-data').attr('class', 'center transition');
 					
+					$('#alt-data').attr('class', 'right transition');
 				});
 			}
 			else{
