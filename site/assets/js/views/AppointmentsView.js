@@ -23,12 +23,9 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 				if (e.loadcheck) {
 					vent.trigger('show-edit', this);
 				}
+				
 			});
-				if ($('#main-data').hasClass('left')) {
-
-					$('#main-data').attr('class', 'center transition');
-					$('#alt-data').attr('class', 'right transition');
-				}
+			
 
 		},
 		formatDate : function(d) {
@@ -66,7 +63,12 @@ define(["lib/backbone", "views/EditView", "views/HeaderView", "collections/Appoi
 				self.subViews.push(cView);
 				self.$el.append(cView.el);
 
-			})
+			});
+				if ($('#main-data').hasClass('left')) {
+
+					$('#main-data').attr('class', 'center transition');
+					$('#alt-data').attr('class', 'right transition');
+				}
 		},
 
 		checkHeader : function(e) {
