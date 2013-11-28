@@ -64,7 +64,7 @@ function(Backbone, AppModel,  AppView, EditView, AddView, DetailView, Appointmen
 		
 	},
 	loadNavView : function(view){
-		this.navview && (this.this.navview.close ? this.this.navview.close() : this.this.navview.remove());
+		this.navview && (this.navview.close ? this.navview.close() : this.navview.remove());
 		this.navview = this.navview ;
 	}
 });

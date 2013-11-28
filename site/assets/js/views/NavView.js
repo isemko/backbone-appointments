@@ -25,7 +25,7 @@ define(["lib/backbone", "lib/underscore", "lib/text!templates/nav.html"], functi
 			var temp_nav = this.navTypes.slice();
 			temp_nav.splice(temp_nav.indexOf(data), 1);
 			this.$el.find('.' + temp_nav[0] + ',.' + temp_nav[1]).fadeOut(.001, function() {
-				self.$el.find('.' + data).fadeIn('fast');
+				self.$el.find('.' + data).fadeIn(.5);
 			});
 
 		},
